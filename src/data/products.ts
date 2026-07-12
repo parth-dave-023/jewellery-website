@@ -19,9 +19,36 @@ export interface Product {
   style: Style
   tag?: 'New' | 'Bestseller'
   hover: string
+  /** Real studio photography (square). First image is the card/hero shot. */
+  images?: string[]
+  /** Optional web-optimised product clip. */
+  video?: string
+  /** Short marketing description for real pieces. */
+  blurb?: string
 }
 
 export const PRODUCTS: Product[] = [
+  {
+    id: 'asimi',
+    name: 'Asimi Pear Noir Ring',
+    type: 'Rings',
+    shape: 'Pear',
+    metal: 'White Gold',
+    carat: 5.2,
+    price: 289000,
+    style: 'Halo',
+    tag: 'Bestseller',
+    hover: 'DETAIL VIEW',
+    images: [
+      '/products/asimi/asimi-1-front.jpg',
+      '/products/asimi/asimi-4-detail.jpg',
+      '/products/asimi/asimi-3-underside.jpg',
+      '/products/asimi/asimi-2-side.jpg',
+    ],
+    video: '/products/asimi/asimi-video.mp4',
+    blurb:
+      'A 5-carat pear-cut salt-and-pepper diamond, held in a brilliant-cut halo on a French-pavé white-gold band. One-of-a-kind — the inclusions are its fingerprint.',
+  },
   { id: 'aurora', name: 'Aurora Solitaire Ring', type: 'Rings', shape: 'Round', metal: 'White Gold', carat: 0.5, price: 84000, style: 'Solitaire', tag: 'New', hover: 'SIDE PROFILE' },
   { id: 'celeste', name: 'Celeste Oval Studs', type: 'Earrings', shape: 'Oval', metal: 'Yellow Gold', carat: 0.6, price: 52000, style: 'Minimalist', hover: 'ON MODEL' },
   { id: 'lumen', name: 'Lumen Tennis Bracelet', type: 'Bracelets', shape: 'Round', metal: 'White Gold', carat: 2.0, price: 245000, style: 'Eternity', tag: 'Bestseller', hover: 'ON WRIST' },
@@ -109,6 +136,16 @@ export const photoFor = (p: Product): string => {
   for (let i = 0; i < p.id.length; i++) h += p.id.charCodeAt(i)
   return `https://images.unsplash.com/photo-${PHOTO_IDS[h % PHOTO_IDS.length]}?w=640&h=640&fit=crop&q=70`
 }
+
+/** Primary card image: real photo if present, else the Unsplash stand-in. */
+export const cardImageFor = (p: Product): string => (p.images?.length ? p.images[0] : photoFor(p))
+
+/** Second image shown on card hover: real second angle, else the primary. */
+export const hoverImageFor = (p: Product): string =>
+  p.images && p.images.length > 1 ? p.images[1] : cardImageFor(p)
+
+/** Whether a piece has its own real studio photography (vs a gradient/stand-in). */
+export const hasRealMedia = (p: Product): boolean => !!p.images?.length
 
 export interface Filters {
   types: ProductType[]

@@ -3,67 +3,6 @@ import type { Filters } from './products'
 const u = (id: string, w: number, h: number) =>
   `https://images.unsplash.com/photo-${id}?w=${w}&h=${h}&fit=crop&q=75`
 
-/* ---------------- Lookbook (hero) ---------------- */
-
-export interface LookbookPage {
-  kind: 'cover' | 'spread' | 'back'
-  eyebrow?: string
-  title: string
-  body?: string
-  img?: string
-  cta?: { label: string; filters: Partial<Filters> }
-}
-
-export const LOOKBOOK_PAGES: LookbookPage[] = [
-  {
-    kind: 'cover',
-    eyebrow: 'MINIMALIST JEWELLERY',
-    title: 'The Lookbook',
-    body: 'Volume I — Pieces for every day',
-  },
-  {
-    kind: 'spread',
-    eyebrow: 'Chapter 01',
-    title: 'The Solitaire',
-    body: 'One stone, held in as little metal as possible. The piece the rest of the wardrobe answers to.',
-    img: u('1605100804763-247f67b3557e', 720, 900),
-    cta: { label: 'Shop solitaires', filters: { styles: ['Solitaire'] } },
-  },
-  {
-    kind: 'spread',
-    eyebrow: 'Chapter 02',
-    title: 'Worn, not kept',
-    body: 'Fine jewellery that lives outside the locker — at work, at dinner, in the sea.',
-    img: u('1620656798579-1984d9e87df7', 720, 900),
-    cta: { label: 'Shop necklaces', filters: { types: ['Necklaces'] } },
-  },
-  {
-    kind: 'spread',
-    eyebrow: 'Chapter 03',
-    title: 'Layers of light',
-    body: 'Thread-fine chains and small diamonds, made to be stacked and forgotten about.',
-    img: u('1611652022419-a9419f74343d', 720, 900),
-    cta: { label: 'Shop minimalist', filters: { styles: ['Minimalist'] } },
-  },
-  {
-    kind: 'spread',
-    eyebrow: 'Chapter 04',
-    title: 'The Eternity line',
-    body: 'An unbroken run of stones — for anniversaries, or for a Tuesday.',
-    img: u('1619119069152-a2b331eb392a', 720, 900),
-    cta: { label: 'Shop eternity', filters: { styles: ['Eternity'] } },
-  },
-  {
-    kind: 'back',
-    title: 'Crafted to be worn for life',
-    body: 'Certified diamonds · Recycled gold · Made to order in India',
-  },
-]
-
-/* ---------------- Press strip ---------------- */
-
-export const PRESS = ['VOGUE INDIA', 'GQ', 'ELLE', 'ARCHITECTURAL DIGEST', 'HARPER’S BAZAAR', 'FEMINA']
-
 /* ---------------- Curated edits ---------------- */
 
 export interface Edit {

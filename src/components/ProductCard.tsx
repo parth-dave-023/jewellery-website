@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { METAL_GRADIENTS, inr, photoFor, type Product } from '../data/products'
+import { METAL_GRADIENTS, inr, cardImageFor, hoverImageFor, hasRealMedia, type Product } from '../data/products'
 import { useStore } from '../store'
 import { HeartIcon } from './Icons'
 
@@ -7,6 +7,9 @@ export default function ProductCard({ product }: { product: Product }) {
   const { state, dispatch } = useStore()
   const [hovered, setHovered] = useState(false)
   const wished = state.wishlist.includes(product.id)
+  const real = hasRealMedia(product)
+  const base = cardImageFor(product)
+  const alt = hoverImageFor(product)
 
   return (
     <article className="card">
@@ -27,14 +30,24 @@ export default function ProductCard({ product }: { product: Product }) {
         }}
       >
         <img
-          src={photoFor(product)}
+          src={base}
           alt={product.name}
           loading="lazy"
-          className={hovered ? 'zoomed' : ''}
+          className={`${hovered ? 'zoomed' : ''} ${real && hovered ? 'fade-out' : ''}`}
           onError={(e) => {
             e.currentTarget.style.opacity = '0'
           }}
         />
+        {real && alt !== base && (
+          <img
+            src={alt}
+            alt=""
+            aria-hidden
+            loading="lazy"
+            className={`card-hover-img ${hovered ? 'show zoomed' : ''}`}
+          />
+        )}
+        {real && product.video && <span className="card-video-tag" aria-hidden>▶ VIDEO</span>}
         {product.tag && (
           <span className={`card-tag ${product.tag === 'New' ? 'tag-new' : 'tag-best'}`}>{product.tag}</span>
         )}

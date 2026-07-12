@@ -2,28 +2,6 @@ import { useState, type FormEvent } from 'react'
 import { EDITS, FAQS, FOUR_CS, GALLERY, JOURNAL, STORY_ROWS, TESTIMONIALS } from '../data/content'
 import { useStore } from '../store'
 import { PlusIcon } from './Icons'
-import Lookbook from './Lookbook'
-
-/* ---------- The Lookbook band ---------- */
-
-export function LookbookBand() {
-  return (
-    <section className="lookbook-band">
-      <div className="container">
-        <div className="sec-head">
-          <span className="eyebrow">VOLUME I</span>
-          <h2>The Lookbook</h2>
-          <p className="sec-sub">
-            Turn the pages of the collection — a printed copy ships with every order.
-          </p>
-        </div>
-        <div className="lookbook-band-stage">
-          <Lookbook />
-        </div>
-      </div>
-    </section>
-  )
-}
 
 /* ---------- Curated edits ---------- */
 

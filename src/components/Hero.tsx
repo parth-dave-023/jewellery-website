@@ -1,12 +1,10 @@
 import { useStore } from '../store'
-import { PRESS } from '../data/content'
 
 export default function Hero() {
   const { scrollToShop } = useStore()
 
   return (
-    <>
-      <section className="hero-photo" aria-label="Minimalist Jewellery">
+    <section className="hero-photo" aria-label="Minimalist Jewellery">
         <h1 className="sr-only">Minimalist Jewellery — everyday fine jewellery</h1>
         <img className="hero-photo-img" src="/img/hero.png" alt="A woman wearing a delicate diamond pendant and studs in warm daylight" fetchPriority="high" />
         <div className="hero-photo-scrim" aria-hidden />
@@ -28,15 +26,6 @@ export default function Hero() {
           <span>Scroll</span>
           <span className="hero-scroll-line" aria-hidden />
         </button>
-      </section>
-      <div className="press container" aria-label="As featured in">
-        <span className="press-label">AS FEATURED IN</span>
-        <ul>
-          {PRESS.map((p) => (
-            <li key={p}>{p}</li>
-          ))}
-        </ul>
-      </div>
-    </>
+    </section>
   )
 }
