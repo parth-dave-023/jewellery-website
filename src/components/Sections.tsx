@@ -2,6 +2,28 @@ import { useState, type FormEvent } from 'react'
 import { EDITS, FAQS, FOUR_CS, GALLERY, JOURNAL, STORY_ROWS, TESTIMONIALS } from '../data/content'
 import { useStore } from '../store'
 import { PlusIcon } from './Icons'
+import Lookbook from './Lookbook'
+
+/* ---------- The Lookbook band ---------- */
+
+export function LookbookBand() {
+  return (
+    <section className="lookbook-band">
+      <div className="container">
+        <div className="sec-head">
+          <span className="eyebrow">VOLUME I</span>
+          <h2>The Lookbook</h2>
+          <p className="sec-sub">
+            Turn the pages of the collection — a printed copy ships with every order.
+          </p>
+        </div>
+        <div className="lookbook-band-stage">
+          <Lookbook />
+        </div>
+      </div>
+    </section>
+  )
+}
 
 /* ---------- Curated edits ---------- */
 
@@ -113,7 +135,7 @@ export function PromiseBand() {
     <section id="promise" className="promise">
       <div className="container">
         <div className="sec-head">
-          <span className="eyebrow">THE AUREN PROMISE</span>
+          <span className="eyebrow">THE MINIMALIST PROMISE</span>
           <h2>Bought once, trusted for life</h2>
         </div>
         <div className="promise-grid">
@@ -144,7 +166,7 @@ export function Bespoke() {
             carry — our design team turns ideas into CAD renders within a week, and a finished piece
             in about six.
           </p>
-          <a className="btn-ink" href="mailto:bespoke@auren.example">
+          <a className="btn-ink" href="mailto:bespoke@minimalistjewellery.example">
             Start a bespoke enquiry
           </a>
           <span className="bespoke-note mono">NO COMMITMENT UNTIL YOU APPROVE THE RENDER</span>
@@ -225,7 +247,7 @@ export function Gallery() {
       <div className="container">
         <div className="sec-head">
           <span className="eyebrow">AS WORN</span>
-          <h2>#QuietlyBrilliant</h2>
+          <h2>#MinimalistJewellery</h2>
           <p className="sec-sub">Real pieces on real people — tag us to be featured.</p>
         </div>
       </div>

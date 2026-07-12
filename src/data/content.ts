@@ -17,7 +17,7 @@ export interface LookbookPage {
 export const LOOKBOOK_PAGES: LookbookPage[] = [
   {
     kind: 'cover',
-    eyebrow: 'AUREN',
+    eyebrow: 'MINIMALIST JEWELLERY',
     title: 'The Lookbook',
     body: 'Volume I — Pieces for every day',
   },
@@ -119,7 +119,7 @@ export const STORY_ROWS: StoryRow[] = [
   {
     eyebrow: 'THE ATELIER',
     title: 'Forty-one hands touch every piece',
-    body: 'Each Auren piece is made to order in our Jaipur atelier by master jewellers whose families have set stones for four generations. Casting, setting, polishing — nothing leaves the bench until the setter who started it signs it off.',
+    body: 'Each piece is made to order in our Jaipur atelier by master jewellers whose families have set stones for four generations. Casting, setting, polishing — nothing leaves the bench until the setter who started it signs it off.',
     img: u('1601121141461-9d6647bca1ed', 900, 1050),
     stat: { value: '2–3', label: 'weeks to hand-craft your piece' },
   },
@@ -152,7 +152,7 @@ export const FOUR_CS: FourC[] = [
     letter: 'C',
     name: 'Colour',
     short: 'How white it reads',
-    body: 'Graded D (colourless) to Z. We buy D–G exclusively, so every Auren stone reads icy white against both gold and platinum.',
+    body: 'Graded D (colourless) to Z. We buy D–G exclusively, so every stone reads icy white against both gold and platinum.',
   },
   {
     letter: 'C',
@@ -273,6 +273,6 @@ export const FAQS: Faq[] = [
   },
   {
     q: 'Is the gold really recycled?',
-    a: 'All Auren gold is certified 100% recycled, re-refined to virgin quality. Chemically it is identical to newly-mined gold — the only difference is that no new earth was moved for it.',
+    a: 'All our gold is certified 100% recycled, re-refined to virgin quality. Chemically it is identical to newly-mined gold — the only difference is that no new earth was moved for it.',
   },
 ]

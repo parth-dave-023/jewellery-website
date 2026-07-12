@@ -65,7 +65,7 @@ function PageFace({ page }: { page: LookbookPage }) {
 function LeafBack() {
   return (
     <div className="lb-page lb-paper">
-      <span className="lb-paper-mark">AUREN</span>
+      <span className="lb-paper-mark">MINIMALIST</span>
     </div>
   )
 }
@@ -145,7 +145,7 @@ export default function Lookbook() {
         <span className="lb-count mono">
           {String((turn ? turn.to : index) + 1).padStart(2, '0')} / {String(LOOKBOOK_PAGES.length).padStart(2, '0')}
         </span>
-        <span className="lb-note">The Auren lookbook — a printed copy ships with every order</span>
+        <span className="lb-note">A printed copy ships with every order</span>
         <span className="lb-arrows">
           <button className="icon-btn" aria-label="Previous page" disabled={index === 0} onClick={() => go('prev')}>
             <ArrowIcon dir="left" />

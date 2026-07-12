@@ -12,6 +12,7 @@ import {
   FourCs,
   Gallery,
   Journal,
+  LookbookBand,
   Newsletter,
   PromiseBand,
   Testimonials,
@@ -29,6 +30,7 @@ function ShopView() {
       <Hero />
       <ShapeStrip />
       <EditsBand />
+      <LookbookBand />
       <Collection />
       <Craftsmanship />
       <FourCs />

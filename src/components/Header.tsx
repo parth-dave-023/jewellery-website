@@ -85,8 +85,9 @@ export default function Header() {
       <header className="header">
         <div className="header-inner">
           <div className="header-left" />
-          <button className="wordmark" onClick={() => dispatch({ type: 'go', view: 'shop' })}>
-            AUREN
+          <button className="wordmark" onClick={() => dispatch({ type: 'go', view: 'shop' })} aria-label="Minimalist Jewellery — home">
+            <span className="wm-main">MINIMALIST</span>
+            <span className="wm-sub">Jewellery</span>
           </button>
           <div className="header-icons">
             <button className="icon-btn" aria-label="Search" onClick={() => dispatch({ type: 'setSearch', open: true })}>

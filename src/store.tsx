@@ -119,7 +119,7 @@ const reducer = (s: State, a: Action): State => {
     case 'go':
       return { ...s, view: a.view, drawerOpen: false, wishlistOpen: false, quickViewId: null, searchOpen: false }
     case 'placeOrder': {
-      const orderNo = 'AUR-' + Math.floor(100000 + Math.random() * 900000)
+      const orderNo = 'MJ-' + Math.floor(100000 + Math.random() * 900000)
       return { ...s, view: 'confirmation', orderNo, cart: [], drawerOpen: false }
     }
   }

@@ -11,7 +11,7 @@ export default function Footer() {
     <footer className="footer">
       <div className="container footer-grid">
         <div className="footer-brand">
-          <span className="footer-mark">AUREN</span>
+          <span className="footer-mark">MINIMALIST JEWELLERY</span>
           <p>
             Everyday fine jewellery. Certified diamonds, recycled gold, crafted to order in India —
             made to be worn for life.
@@ -49,7 +49,7 @@ export default function Footer() {
         </div>
       </div>
       <div className="container footer-base">
-        <span>© {new Date().getFullYear()} Auren Fine Jewellery. A demonstration storefront.</span>
+        <span>© {new Date().getFullYear()} Minimalist Jewellery. A demonstration storefront.</span>
         <span className="mono">IGI · GIA CERTIFIED / SECURE CHECKOUT / MADE IN INDIA</span>
       </div>
     </footer>
