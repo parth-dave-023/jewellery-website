@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { METAL_GRADIENTS, inr, cardImageFor, hoverImageFor, hasRealMedia, type Product } from '../data/products'
+import { METAL_GRADIENTS, formatPrice, cardImageFor, hoverImageFor, hasRealMedia, type Product } from '../data/products'
 import { useStore } from '../store'
 import { HeartIcon } from './Icons'
 
@@ -74,7 +74,7 @@ export default function ProductCard({ product }: { product: Product }) {
           {product.metal} · {product.carat} ct
         </p>
         <div className="card-foot">
-          <span className="card-price">{inr(product.price)}</span>
+          <span className="card-price">{formatPrice(product.price)}</span>
           <button className="btn-outline small" onClick={() => dispatch({ type: 'addToCart', id: product.id })}>
             Add
           </button>

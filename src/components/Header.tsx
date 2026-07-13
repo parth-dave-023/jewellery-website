@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { useStore } from '../store'
-import { PRODUCTS, inr } from '../data/products'
+import { PRODUCTS, formatPrice } from '../data/products'
 import { SearchIcon, AccountIcon, HeartIcon, BagIcon, CloseIcon } from './Icons'
 
 const ANNOUNCEMENT = 'Complimentary insured shipping across India · Lifetime warranty & servicing'
@@ -64,7 +64,7 @@ function SearchOverlay() {
                   <span className="search-spec">
                     {p.metal} · {p.carat} ct
                   </span>
-                  <span className="search-price">{inr(p.price)}</span>
+                  <span className="search-price">{formatPrice(p.price)}</span>
                 </button>
               </li>
             ))}

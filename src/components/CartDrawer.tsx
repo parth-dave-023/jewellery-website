@@ -1,4 +1,4 @@
-import { METAL_GRADIENTS, inr, photoFor, PRODUCTS } from '../data/products'
+import { METAL_GRADIENTS, formatPrice, photoFor, PRODUCTS } from '../data/products'
 import { useStore } from '../store'
 import { CloseIcon, HeartIcon } from './Icons'
 
@@ -42,7 +42,7 @@ export function WishlistPanel() {
                   {p.metal} · {p.carat} ct
                 </span>
                 <div className="line-row">
-                  <span className="line-price">{inr(p.price)}</span>
+                  <span className="line-price">{formatPrice(p.price)}</span>
                   <button className="btn-outline small" onClick={() => dispatch({ type: 'addToCart', id: p.id })}>
                     Add to bag
                   </button>
@@ -97,7 +97,7 @@ export default function CartDrawer() {
                     <span>{qty}</span>
                     <button aria-label="Increase quantity" onClick={() => dispatch({ type: 'changeQty', id: p.id, delta: 1 })}>+</button>
                   </span>
-                  <span className="line-price">{inr(p.price * qty)}</span>
+                  <span className="line-price">{formatPrice(p.price * qty)}</span>
                 </div>
               </div>
               <button className="line-remove" onClick={() => dispatch({ type: 'removeItem', id: p.id })}>
@@ -110,11 +110,11 @@ export default function CartDrawer() {
           <div className="drawer-foot">
             <div className="foot-row">
               <span>Subtotal</span>
-              <span>{inr(subtotal)}</span>
+              <span>{formatPrice(subtotal)}</span>
             </div>
             <div className="foot-row total">
-              <span>Total (incl. GST)</span>
-              <span>{inr(total)}</span>
+              <span>Total (incl. tax)</span>
+              <span>{formatPrice(total)}</span>
             </div>
             <button className="btn-ink block" onClick={() => dispatch({ type: 'go', view: 'checkout' })}>
               Checkout

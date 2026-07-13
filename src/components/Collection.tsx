@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { CARAT_BUCKETS, PRICE_CAP, inr, type SortKey } from '../data/products'
+import { CARAT_BUCKETS, PRICE_CAP, formatPrice, type SortKey } from '../data/products'
 import { useStore } from '../store'
 import FilterRail from './FilterRail'
 import DiscoverPanel from './DiscoverPanel'
@@ -20,7 +20,7 @@ function ActiveChips() {
     ...f.styles.map((v) => ({ label: v, onRemove: () => dispatch({ type: 'toggleFilter', kind: 'styles' as const, value: v }) })),
   ]
   if (f.priceMax < PRICE_CAP) {
-    chips.push({ label: `Up to ${inr(f.priceMax)}`, onRemove: () => dispatch({ type: 'setPrice', value: PRICE_CAP }) })
+    chips.push({ label: `Up to ${formatPrice(f.priceMax)}`, onRemove: () => dispatch({ type: 'setPrice', value: PRICE_CAP }) })
   }
 
   return (

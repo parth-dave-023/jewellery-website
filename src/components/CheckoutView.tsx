@@ -1,10 +1,10 @@
 import type { FormEvent } from 'react'
-import { inr } from '../data/products'
+import { formatPrice } from '../data/products'
 import { useStore } from '../store'
 import { LockIcon } from './Icons'
 
 export default function CheckoutView() {
-  const { dispatch, cartProducts, subtotal, gst, total } = useStore()
+  const { dispatch, cartProducts, subtotal, tax, total } = useStore()
 
   const submit = (e: FormEvent) => {
     e.preventDefault()
@@ -79,16 +79,16 @@ export default function CheckoutView() {
               <span>
                 {p.name} <span className="qty-x">× {qty}</span>
               </span>
-              <span>{inr(p.price * qty)}</span>
+              <span>{formatPrice(p.price * qty)}</span>
             </div>
           ))}
           <div className="foot-row">
             <span>Subtotal</span>
-            <span>{inr(subtotal)}</span>
+            <span>{formatPrice(subtotal)}</span>
           </div>
           <div className="foot-row">
-            <span>GST (3%)</span>
-            <span>{inr(gst)}</span>
+            <span>Tax (3%)</span>
+            <span>{formatPrice(tax)}</span>
           </div>
           <div className="foot-row">
             <span>Shipping</span>
@@ -96,10 +96,10 @@ export default function CheckoutView() {
           </div>
           <div className="foot-row grand">
             <span>TOTAL</span>
-            <span>{inr(total)}</span>
+            <span>{formatPrice(total)}</span>
           </div>
           <button className="btn-ink block" type="submit">
-            Place order · {inr(total)}
+            Place order · {formatPrice(total)}
           </button>
           <p className="secure-line">
             <LockIcon /> Encrypted with SSL — your details never touch our servers

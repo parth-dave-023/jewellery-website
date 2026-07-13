@@ -9,7 +9,7 @@ import {
   STYLES,
   TYPES,
   countFor,
-  inr,
+  formatPrice,
 } from '../data/products'
 import { useStore } from '../store'
 import ShapeGlyph from './ShapeGlyph'
@@ -115,7 +115,7 @@ export default function FilterRail({ open = false }: { open?: boolean }) {
           onChange={(e) => dispatch({ type: 'setPrice', value: +e.target.value })}
           aria-label="Maximum price"
         />
-        <div className="price-readout">Up to {inr(f.priceMax)}</div>
+        <div className="price-readout">Up to {formatPrice(f.priceMax)}</div>
       </section>
 
       <section className="rail-sec">

@@ -37,10 +37,10 @@ export const EDITS: Edit[] = [
   },
   {
     id: 'gifts',
-    title: 'Gifts under ₹60,000',
+    title: 'Gifts under $750',
     blurb: 'Certain yeses — every piece here arrives gift-wrapped.',
     img: u('1512163143273-bde0e3cc7407', 640, 780),
-    filters: { priceMax: 60000 },
+    filters: { priceMax: 750 },
   },
 ]
 

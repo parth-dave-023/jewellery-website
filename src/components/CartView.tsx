@@ -1,9 +1,9 @@
-import { METAL_GRADIENTS, inr, photoFor } from '../data/products'
+import { METAL_GRADIENTS, formatPrice, photoFor } from '../data/products'
 import { useStore } from '../store'
 import { LockIcon } from './Icons'
 
 export default function CartView() {
-  const { dispatch, cartProducts, subtotal, gst, total } = useStore()
+  const { dispatch, cartProducts, subtotal, tax, total } = useStore()
 
   return (
     <main className="container page">
@@ -43,7 +43,7 @@ export default function CartView() {
                     </button>
                   </div>
                 </div>
-                <span className="line-total">{inr(p.price * qty)}</span>
+                <span className="line-total">{formatPrice(p.price * qty)}</span>
               </div>
             ))}
           </div>
@@ -51,11 +51,11 @@ export default function CartView() {
             <h2>Order summary</h2>
             <div className="foot-row">
               <span>Subtotal</span>
-              <span>{inr(subtotal)}</span>
+              <span>{formatPrice(subtotal)}</span>
             </div>
             <div className="foot-row">
-              <span>GST (3%)</span>
-              <span>{inr(gst)}</span>
+              <span>Tax (3%)</span>
+              <span>{formatPrice(tax)}</span>
             </div>
             <div className="foot-row">
               <span>Shipping</span>
@@ -63,7 +63,7 @@ export default function CartView() {
             </div>
             <div className="foot-row grand">
               <span>TOTAL</span>
-              <span>{inr(total)}</span>
+              <span>{formatPrice(total)}</span>
             </div>
             <button className="btn-ink block" onClick={() => dispatch({ type: 'go', view: 'checkout' })}>
               Proceed to checkout

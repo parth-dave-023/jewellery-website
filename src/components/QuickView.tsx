@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { METAL_GRADIENTS, PRODUCTS, inr, photoFor, hasRealMedia } from '../data/products'
+import { METAL_GRADIENTS, PRODUCTS, formatPrice, photoFor, hasRealMedia } from '../data/products'
 import { useStore } from '../store'
 import { CloseIcon, HeartIcon } from './Icons'
 
@@ -107,7 +107,7 @@ export default function QuickView() {
         <div className="qv-info">
           {product.tag && <span className={`card-tag static ${product.tag === 'New' ? 'tag-new' : 'tag-best'}`}>{product.tag}</span>}
           <h2>{product.name}</h2>
-          <span className="qv-price">{inr(product.price)}</span>
+          <span className="qv-price">{formatPrice(product.price)}</span>
           {product.blurb && <p className="qv-blurb">{product.blurb}</p>}
           <dl className="qv-specs">
             {specs.map(([k, v]) => (

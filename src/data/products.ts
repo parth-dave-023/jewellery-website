@@ -35,7 +35,7 @@ export const PRODUCTS: Product[] = [
     shape: 'Pear',
     metal: 'White Gold',
     carat: 5.2,
-    price: 289000,
+    price: 3480,
     style: 'Halo',
     tag: 'Bestseller',
     hover: 'DETAIL VIEW',
@@ -49,30 +49,30 @@ export const PRODUCTS: Product[] = [
     blurb:
       'A 5-carat pear-cut salt-and-pepper diamond, held in a brilliant-cut halo on a French-pavé white-gold band. One-of-a-kind — the inclusions are its fingerprint.',
   },
-  { id: 'aurora', name: 'Aurora Solitaire Ring', type: 'Rings', shape: 'Round', metal: 'White Gold', carat: 0.5, price: 84000, style: 'Solitaire', tag: 'New', hover: 'SIDE PROFILE' },
-  { id: 'celeste', name: 'Celeste Oval Studs', type: 'Earrings', shape: 'Oval', metal: 'Yellow Gold', carat: 0.6, price: 52000, style: 'Minimalist', hover: 'ON MODEL' },
-  { id: 'lumen', name: 'Lumen Tennis Bracelet', type: 'Bracelets', shape: 'Round', metal: 'White Gold', carat: 2.0, price: 245000, style: 'Eternity', tag: 'Bestseller', hover: 'ON WRIST' },
-  { id: 'marlow', name: 'Marlow Emerald Pendant', type: 'Pendants', shape: 'Emerald', metal: 'Platinum', carat: 0.75, price: 98000, style: 'Solitaire', hover: 'DETAIL VIEW' },
-  { id: 'petal', name: 'Petal Halo Ring', type: 'Rings', shape: 'Round', metal: 'Rose Gold', carat: 0.8, price: 112000, style: 'Halo', tag: 'Bestseller', hover: 'SIDE PROFILE' },
-  { id: 'thread', name: 'Thread Diamond Necklace', type: 'Necklaces', shape: 'Round', metal: 'Yellow Gold', carat: 0.25, price: 36500, style: 'Minimalist', hover: 'ON MODEL' },
-  { id: 'vega', name: 'Vega Princess Ring', type: 'Rings', shape: 'Princess', metal: 'White Gold', carat: 1.0, price: 158000, style: 'Solitaire', hover: 'SIDE PROFILE' },
-  { id: 'dew', name: 'Dew Pave Huggies', type: 'Earrings', shape: 'Round', metal: 'Rose Gold', carat: 0.4, price: 44000, style: 'Pave', hover: 'ON MODEL' },
-  { id: 'estelle', name: 'Estelle Pear Pendant', type: 'Pendants', shape: 'Pear', metal: 'White Gold', carat: 0.5, price: 67000, style: 'Solitaire', tag: 'New', hover: 'DETAIL VIEW' },
-  { id: 'orbit', name: 'Orbit Eternity Band', type: 'Rings', shape: 'Round', metal: 'Platinum', carat: 1.0, price: 134000, style: 'Eternity', hover: 'SIDE PROFILE' },
-  { id: 'muse', name: 'Muse Cushion Studs', type: 'Earrings', shape: 'Cushion', metal: 'Yellow Gold', carat: 1.0, price: 120000, style: 'Solitaire', hover: 'ON MODEL' },
-  { id: 'favola', name: 'Favola Three-Stone Ring', type: 'Rings', shape: 'Oval', metal: 'Rose Gold', carat: 1.2, price: 195000, style: 'Three-Stone', tag: 'Bestseller', hover: 'SIDE PROFILE' },
-  { id: 'lune', name: 'Lune Marquise Necklace', type: 'Necklaces', shape: 'Marquise', metal: 'White Gold', carat: 0.45, price: 58000, style: 'Statement', hover: 'ON MODEL' },
-  { id: 'aria', name: 'Aria Bezel Bracelet', type: 'Bracelets', shape: 'Round', metal: 'Yellow Gold', carat: 0.3, price: 41000, style: 'Minimalist', hover: 'ON WRIST' },
-  { id: 'nova', name: 'Nova Radiant Ring', type: 'Rings', shape: 'Radiant', metal: 'Platinum', carat: 1.5, price: 280000, style: 'Solitaire', hover: 'SIDE PROFILE' },
-  { id: 'frost', name: 'Frost Cluster Studs', type: 'Earrings', shape: 'Round', metal: 'White Gold', carat: 0.7, price: 72000, style: 'Cluster', hover: 'ON MODEL' },
-  { id: 'reverie', name: 'Reverie Asscher Pendant', type: 'Pendants', shape: 'Asscher', metal: 'Yellow Gold', carat: 0.6, price: 79000, style: 'Solitaire', hover: 'DETAIL VIEW' },
-  { id: 'bloom', name: 'Bloom Pave Ring', type: 'Rings', shape: 'Round', metal: 'Rose Gold', carat: 0.35, price: 47500, style: 'Pave', tag: 'New', hover: 'SIDE PROFILE' },
-  { id: 'cascade', name: 'Cascade Diamond Necklace', type: 'Necklaces', shape: 'Round', metal: 'Platinum', carat: 1.0, price: 168000, style: 'Statement', hover: 'ON MODEL' },
-  { id: 'wren', name: 'Wren Solitaire Studs', type: 'Earrings', shape: 'Round', metal: 'White Gold', carat: 0.5, price: 58000, style: 'Solitaire', tag: 'Bestseller', hover: 'ON MODEL' },
-  { id: 'halo', name: 'Halo Drop Earrings', type: 'Earrings', shape: 'Oval', metal: 'Yellow Gold', carat: 0.9, price: 104000, style: 'Halo', hover: 'ON MODEL' },
-  { id: 'serein', name: 'Serein Bangle', type: 'Bracelets', shape: 'Round', metal: 'Rose Gold', carat: 0.5, price: 88000, style: 'Statement', hover: 'ON WRIST' },
-  { id: 'iris', name: 'Iris Eternity Ring', type: 'Rings', shape: 'Round', metal: 'White Gold', carat: 0.75, price: 96000, style: 'Eternity', hover: 'SIDE PROFILE' },
-  { id: 'astra', name: 'Astra Pear Studs', type: 'Earrings', shape: 'Pear', metal: 'Platinum', carat: 0.8, price: 92000, style: 'Minimalist', tag: 'New', hover: 'ON MODEL' },
+  { id: 'aurora', name: 'Aurora Solitaire Ring', type: 'Rings', shape: 'Round', metal: 'White Gold', carat: 0.5, price: 1010, style: 'Solitaire', tag: 'New', hover: 'SIDE PROFILE' },
+  { id: 'celeste', name: 'Celeste Oval Studs', type: 'Earrings', shape: 'Oval', metal: 'Yellow Gold', carat: 0.6, price: 625, style: 'Minimalist', hover: 'ON MODEL' },
+  { id: 'lumen', name: 'Lumen Tennis Bracelet', type: 'Bracelets', shape: 'Round', metal: 'White Gold', carat: 2.0, price: 2950, style: 'Eternity', tag: 'Bestseller', hover: 'ON WRIST' },
+  { id: 'marlow', name: 'Marlow Emerald Pendant', type: 'Pendants', shape: 'Emerald', metal: 'Platinum', carat: 0.75, price: 1180, style: 'Solitaire', hover: 'DETAIL VIEW' },
+  { id: 'petal', name: 'Petal Halo Ring', type: 'Rings', shape: 'Round', metal: 'Rose Gold', carat: 0.8, price: 1350, style: 'Halo', tag: 'Bestseller', hover: 'SIDE PROFILE' },
+  { id: 'thread', name: 'Thread Diamond Necklace', type: 'Necklaces', shape: 'Round', metal: 'Yellow Gold', carat: 0.25, price: 440, style: 'Minimalist', hover: 'ON MODEL' },
+  { id: 'vega', name: 'Vega Princess Ring', type: 'Rings', shape: 'Princess', metal: 'White Gold', carat: 1.0, price: 1900, style: 'Solitaire', hover: 'SIDE PROFILE' },
+  { id: 'dew', name: 'Dew Pave Huggies', type: 'Earrings', shape: 'Round', metal: 'Rose Gold', carat: 0.4, price: 530, style: 'Pave', hover: 'ON MODEL' },
+  { id: 'estelle', name: 'Estelle Pear Pendant', type: 'Pendants', shape: 'Pear', metal: 'White Gold', carat: 0.5, price: 810, style: 'Solitaire', tag: 'New', hover: 'DETAIL VIEW' },
+  { id: 'orbit', name: 'Orbit Eternity Band', type: 'Rings', shape: 'Round', metal: 'Platinum', carat: 1.0, price: 1615, style: 'Eternity', hover: 'SIDE PROFILE' },
+  { id: 'muse', name: 'Muse Cushion Studs', type: 'Earrings', shape: 'Cushion', metal: 'Yellow Gold', carat: 1.0, price: 1445, style: 'Solitaire', hover: 'ON MODEL' },
+  { id: 'favola', name: 'Favola Three-Stone Ring', type: 'Rings', shape: 'Oval', metal: 'Rose Gold', carat: 1.2, price: 2350, style: 'Three-Stone', tag: 'Bestseller', hover: 'SIDE PROFILE' },
+  { id: 'lune', name: 'Lune Marquise Necklace', type: 'Necklaces', shape: 'Marquise', metal: 'White Gold', carat: 0.45, price: 700, style: 'Statement', hover: 'ON MODEL' },
+  { id: 'aria', name: 'Aria Bezel Bracelet', type: 'Bracelets', shape: 'Round', metal: 'Yellow Gold', carat: 0.3, price: 495, style: 'Minimalist', hover: 'ON WRIST' },
+  { id: 'nova', name: 'Nova Radiant Ring', type: 'Rings', shape: 'Radiant', metal: 'Platinum', carat: 1.5, price: 3375, style: 'Solitaire', hover: 'SIDE PROFILE' },
+  { id: 'frost', name: 'Frost Cluster Studs', type: 'Earrings', shape: 'Round', metal: 'White Gold', carat: 0.7, price: 865, style: 'Cluster', hover: 'ON MODEL' },
+  { id: 'reverie', name: 'Reverie Asscher Pendant', type: 'Pendants', shape: 'Asscher', metal: 'Yellow Gold', carat: 0.6, price: 950, style: 'Solitaire', hover: 'DETAIL VIEW' },
+  { id: 'bloom', name: 'Bloom Pave Ring', type: 'Rings', shape: 'Round', metal: 'Rose Gold', carat: 0.35, price: 570, style: 'Pave', tag: 'New', hover: 'SIDE PROFILE' },
+  { id: 'cascade', name: 'Cascade Diamond Necklace', type: 'Necklaces', shape: 'Round', metal: 'Platinum', carat: 1.0, price: 2025, style: 'Statement', hover: 'ON MODEL' },
+  { id: 'wren', name: 'Wren Solitaire Studs', type: 'Earrings', shape: 'Round', metal: 'White Gold', carat: 0.5, price: 700, style: 'Solitaire', tag: 'Bestseller', hover: 'ON MODEL' },
+  { id: 'halo', name: 'Halo Drop Earrings', type: 'Earrings', shape: 'Oval', metal: 'Yellow Gold', carat: 0.9, price: 1255, style: 'Halo', hover: 'ON MODEL' },
+  { id: 'serein', name: 'Serein Bangle', type: 'Bracelets', shape: 'Round', metal: 'Rose Gold', carat: 0.5, price: 1060, style: 'Statement', hover: 'ON WRIST' },
+  { id: 'iris', name: 'Iris Eternity Ring', type: 'Rings', shape: 'Round', metal: 'White Gold', carat: 0.75, price: 1155, style: 'Eternity', hover: 'SIDE PROFILE' },
+  { id: 'astra', name: 'Astra Pear Studs', type: 'Earrings', shape: 'Pear', metal: 'Platinum', carat: 0.8, price: 1110, style: 'Minimalist', tag: 'New', hover: 'ON MODEL' },
 ]
 
 export const TYPES: ProductType[] = ['Rings', 'Necklaces', 'Earrings', 'Bracelets', 'Pendants']
@@ -86,12 +86,12 @@ export const CARAT_BUCKETS: { value: CaratBucket; label: string }[] = [
 ]
 export const STYLES: Style[] = ['Solitaire', 'Halo', 'Pave', 'Three-Stone', 'Eternity', 'Minimalist', 'Statement', 'Cluster']
 
-export const PRICE_CAP = 500000
-export const PRICE_MIN = 20000
-export const PRICE_STEP = 5000
-export const GST_RATE = 0.03
+export const PRICE_CAP = 6000
+export const PRICE_MIN = 200
+export const PRICE_STEP = 50
+export const TAX_RATE = 0.03
 
-export const inr = (n: number) => '₹' + Math.round(n).toLocaleString('en-IN')
+export const formatPrice = (n: number) => '$' + Math.round(n).toLocaleString('en-US')
 
 export const caratBucket = (c: number): CaratBucket => {
   if (c < 0.5) return 'under05'

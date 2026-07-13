@@ -7,7 +7,7 @@ import {
   SHAPES,
   STYLES,
   countFor,
-  inr,
+  formatPrice,
 } from '../data/products'
 import { useStore } from '../store'
 import ShapeGlyph from './ShapeGlyph'
@@ -64,7 +64,7 @@ export default function DiscoverPanel() {
             onChange={(e) => dispatch({ type: 'setPrice', value: +e.target.value })}
             aria-label="Maximum budget"
           />
-          <div className="price-readout">Up to {inr(f.priceMax)}</div>
+          <div className="price-readout">Up to {formatPrice(f.priceMax)}</div>
         </div>
       </div>
       <div className="discover-sec">

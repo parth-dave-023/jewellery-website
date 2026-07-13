@@ -1,7 +1,7 @@
 import { createContext, useContext, useMemo, useReducer, type ReactNode } from 'react'
 import {
   EMPTY_FILTERS,
-  GST_RATE,
+  TAX_RATE,
   PRODUCTS,
   passes,
   sortProducts,
@@ -132,7 +132,7 @@ export interface Store {
   results: Product[]
   cartCount: number
   subtotal: number
-  gst: number
+  tax: number
   total: number
   cartProducts: { product: Product; qty: number }[]
   activeChipCount: number
@@ -158,7 +158,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       return product ? [{ product, qty: c.qty }] : []
     })
     const subtotal = cartProducts.reduce((sum, { product, qty }) => sum + product.price * qty, 0)
-    const gst = Math.round(subtotal * GST_RATE)
+    const tax = Math.round(subtotal * TAX_RATE)
     const f = state.filters
     const activeChipCount =
       f.types.length + f.shapes.length + f.metals.length + f.carats.length + f.styles.length +
@@ -176,8 +176,8 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       results,
       cartCount: state.cart.reduce((sum, c) => sum + c.qty, 0),
       subtotal,
-      gst,
-      total: subtotal + gst,
+      tax,
+      total: subtotal + tax,
       cartProducts,
       activeChipCount,
       scrollToShop: scrollToShopEl,
