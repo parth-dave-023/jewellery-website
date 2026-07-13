@@ -1,4 +1,5 @@
 import { useStore } from '../store'
+import { asset } from '../shopifyAssets'
 
 export default function Hero() {
   const { scrollToShop } = useStore()
@@ -6,7 +7,7 @@ export default function Hero() {
   return (
     <section className="hero-photo" aria-label="Minimalist Jewellery">
         <h1 className="sr-only">Minimalist Jewellery — everyday fine jewellery</h1>
-        <img className="hero-photo-img" src="/img/hero.png" alt="A woman wearing a delicate diamond pendant and studs in warm daylight" fetchPriority="high" />
+        <img className="hero-photo-img" src={asset('/img/hero.png')} alt="A woman wearing a delicate diamond pendant and studs in warm daylight" fetchPriority="high" />
         <div className="hero-photo-scrim" aria-hidden />
         <div className="container hero-photo-inner">
           <div className="hero-photo-copy rise">

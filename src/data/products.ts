@@ -1,3 +1,5 @@
+import { asset } from '../shopifyAssets'
+
 export type ProductType = 'Rings' | 'Necklaces' | 'Earrings' | 'Bracelets' | 'Pendants'
 export type Shape =
   | 'Round' | 'Oval' | 'Emerald' | 'Princess' | 'Pear'
@@ -40,12 +42,12 @@ export const PRODUCTS: Product[] = [
     tag: 'Bestseller',
     hover: 'DETAIL VIEW',
     images: [
-      '/products/asimi/asimi-1-front.jpg',
-      '/products/asimi/asimi-4-detail.jpg',
-      '/products/asimi/asimi-3-underside.jpg',
-      '/products/asimi/asimi-2-side.jpg',
+      asset('/products/asimi/asimi-1-front.jpg'),
+      asset('/products/asimi/asimi-4-detail.jpg'),
+      asset('/products/asimi/asimi-3-underside.jpg'),
+      asset('/products/asimi/asimi-2-side.jpg'),
     ],
-    video: '/products/asimi/asimi-video.mp4',
+    video: asset('/products/asimi/asimi-video.mp4'),
     blurb:
       'A 5-carat pear-cut salt-and-pepper diamond, held in a brilliant-cut halo on a French-pavé white-gold band. One-of-a-kind — the inclusions are its fingerprint.',
   },
