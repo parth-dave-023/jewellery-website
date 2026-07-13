@@ -1,27 +1,27 @@
-# Minimalist Jewellery — Shopify theme
+# Minimalist Jewellery — Shopify theme (exact site duplicate)
 
-Based on Shopify **Dawn v15.5** (Online Store 2.0), restyled to the Minimalist
-Jewellery "warm cream" design. Products, cart, checkout, orders and search are all
-handled natively by Shopify — no external database.
+This theme renders the exact Minimalist Jewellery storefront
+(https://jewellery-website-rose.vercel.app) inside Shopify. It is a blank
+Online Store 2.0 theme whose `layout/theme.liquid` mounts the compiled app
+bundle, so the look and every interaction are identical to the live site.
 
-## What's customised
-- **Palette & type** — `config/settings_data.json`: cream colour schemes, Marcellus
-  headings + Jost body, small radii, hairline cards.
-- **Brand polish** — `assets/mj-custom.css` (loaded in `layout/theme.liquid`).
-- **Photo hero** — `sections/mj-hero.liquid` (+ `assets/section-mj-hero.css`), default
-  image `assets/mj-hero.jpg`. Swap the image in the theme editor.
-- **Shop by shape** — `sections/mj-shape-strip.liquid` with faceted diamond SVGs
-  (`snippets/mj-diamond.liquid`). Each card links to a product search for that cut.
-- **Homepage** — `templates/index.json`: hero → shop-by-shape → featured collection
-  ("Find your piece") → promise → story → newsletter.
-- **Announcement bar** — set in `sections/header-group.json`.
+## How it works
+- `assets/mj-app.js` + `assets/mj-app.css` — the compiled storefront bundle.
+- `layout/theme.liquid` — loads the bundle into `<div id="root">` and injects a
+  `window.MJ_ASSETS` manifest that maps the app's media to Shopify CDN URLs.
+- `assets/mj-hero.png`, `assets/asimi-*.jpg`, `assets/asimi-video.mp4` — media.
+- Every `templates/*.liquid` is a stub — the app renders all views client-side.
+- `layout/password.liquid` — branded "opening soon" gate.
 
-## Everything else is stock Dawn
-Product page media gallery already supports multiple images **and video** natively —
-just upload them to the product in Shopify admin.
+## Import (one click)
+Online Store → Themes → Add theme → Connect from GitHub → this repo, branch
+**`shopify`** → Publish.
 
-## Connect to Shopify (one-click)
-Online Store → Themes → Add theme → **Connect from GitHub** → pick this repo and the
-**`shopify`** branch. Then Customize, and add products in Shopify admin.
+## Updating the design later
+Rebuild the app (`npm run build -- --base=./` on `main`) and copy the new
+`dist/assets/index-*.js|css` over `assets/mj-app.js|css`.
 
-Optional local validation: `shopify theme check`.
+## Note on commerce
+This duplicates the design + UX exactly. Products/cart/checkout currently run in
+the app (demo data). Wiring real Shopify products & checkout is the next step and
+is tracked separately.
