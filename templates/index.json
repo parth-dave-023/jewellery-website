@@ -1,0 +1,163 @@
+{
+  "sections": {
+    "mj_hero": {
+      "type": "mj-hero",
+      "settings": {
+        "height": 90,
+        "eyebrow": "EVERYDAY FINE JEWELLERY",
+        "heading": "Quietly brilliant.",
+        "text": "Certified diamonds and recycled gold, cut into pieces made for real days — designed to be worn for life.",
+        "button_label": "Shop the collection",
+        "button_link": "shopify://collections/all",
+        "link_label": "Our promise",
+        "link_url": "#shopify-section-promise",
+        "color_scheme": "scheme-3"
+      }
+    },
+    "mj_shapes": {
+      "type": "mj-shape-strip",
+      "settings": {
+        "eyebrow": "START WITH THE STONE",
+        "heading": "Shop by shape",
+        "subtext": "Every cut catches the light its own way — pick a silhouette to begin.",
+        "link_label": "View all pieces →",
+        "link_url": "shopify://collections/all",
+        "shapes": "Round,Oval,Emerald,Princess,Pear,Marquise,Cushion,Asscher,Radiant",
+        "color_scheme": "scheme-1",
+        "padding_top": 60,
+        "padding_bottom": 40
+      }
+    },
+    "featured": {
+      "type": "featured-collection",
+      "settings": {
+        "title": "Find your piece",
+        "heading_size": "h1",
+        "description": "",
+        "show_description": false,
+        "collection": "all",
+        "products_to_show": 12,
+        "columns_desktop": 3,
+        "color_scheme": "scheme-1",
+        "full_width": false,
+        "show_view_all": true,
+        "view_all_style": "solid",
+        "enable_desktop_slider": false,
+        "swipe_on_mobile": false,
+        "image_ratio": "square",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "quick_add": "standard",
+        "columns_mobile": "2",
+        "padding_top": 52,
+        "padding_bottom": 52
+      }
+    },
+    "promise": {
+      "type": "multicolumn",
+      "blocks": {
+        "c1": {
+          "type": "column",
+          "settings": {
+            "title": "Certified & graded",
+            "text": "<p>Every diamond is independently certified by IGI or GIA, with grading you can verify.</p>"
+          }
+        },
+        "c2": {
+          "type": "column",
+          "settings": {
+            "title": "Responsibly sourced",
+            "text": "<p>Conflict-free stones and recycled gold, traceable from origin to your hand.</p>"
+          }
+        },
+        "c3": {
+          "type": "column",
+          "settings": {
+            "title": "A lifetime of care",
+            "text": "<p>Complimentary cleaning, resizing and servicing — for as long as you wear it.</p>"
+          }
+        }
+      },
+      "block_order": ["c1", "c2", "c3"],
+      "settings": {
+        "title": "Bought once, trusted for life",
+        "heading_size": "h2",
+        "image_width": "half",
+        "image_ratio": "adapt",
+        "columns_desktop": 3,
+        "column_alignment": "center",
+        "background_style": "none",
+        "button_label": "",
+        "color_scheme": "scheme-2",
+        "columns_mobile": "1",
+        "swipe_on_mobile": false,
+        "padding_top": 56,
+        "padding_bottom": 56
+      }
+    },
+    "story": {
+      "type": "rich-text",
+      "blocks": {
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "heading": "Made slowly, on purpose",
+            "heading_size": "h1"
+          }
+        },
+        "text": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Each piece is made to order by master jewellers whose families have set stones for four generations. Certified diamonds, recycled gold, and a finish signed off by the setter who started it.</p>"
+          }
+        },
+        "button": {
+          "type": "button",
+          "settings": {
+            "button_label": "Our story",
+            "button_link": ""
+          }
+        }
+      },
+      "block_order": ["heading", "text", "button"],
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "scheme-1",
+        "full_width": true,
+        "padding_top": 56,
+        "padding_bottom": 40
+      }
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "blocks": {
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "heading": "First to see new pieces"
+          }
+        },
+        "paragraph": {
+          "type": "paragraph",
+          "settings": {
+            "text": "<p>One considered email a month — new drops, private previews, no noise.</p>"
+          }
+        },
+        "email": {
+          "type": "email_form"
+        }
+      },
+      "block_order": ["heading", "paragraph", "email"],
+      "settings": {
+        "color_scheme": "scheme-2",
+        "full_width": true,
+        "padding_top": 56,
+        "padding_bottom": 56
+      }
+    }
+  },
+  "order": ["mj_hero", "mj_shapes", "featured", "promise", "story", "newsletter"]
+}

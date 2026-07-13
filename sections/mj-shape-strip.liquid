@@ -1,0 +1,67 @@
+{{ 'section-mj-shape-strip.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign shapes = section.settings.shapes | default: 'Round,Oval,Emerald,Princess,Pear,Marquise,Cushion,Asscher,Radiant' | split: ','
+-%}
+
+<div class="mj-shapes color-{{ section.settings.color_scheme }} gradient" style="padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px;">
+  <div class="page-width">
+    <div class="mj-shapes__head">
+      <div>
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="mj-shapes__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h2 class="mj-shapes__heading">{{ section.settings.heading | escape }}</h2>
+        {%- endif -%}
+        {%- if section.settings.subtext != blank -%}
+          <p class="mj-shapes__sub">{{ section.settings.subtext | escape }}</p>
+        {%- endif -%}
+      </div>
+      {%- if section.settings.link_label != blank -%}
+        <a href="{{ section.settings.link_url | default: routes.all_products_collection_url }}" class="mj-shapes__viewall link">{{ section.settings.link_label | escape }}</a>
+      {%- endif -%}
+    </div>
+
+    <div class="mj-shapes__scroll">
+      {%- for shape in shapes -%}
+        {%- assign name = shape | strip -%}
+        <a class="mj-shape-card" href="{{ routes.search_url }}?q={{ name | url_encode }}&type=product">
+          <span class="mj-shape-card__gem">
+            {%- render 'mj-diamond', shape: name -%}
+          </span>
+          <span class="mj-shape-card__name">{{ name }}</span>
+        </a>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "MJ Shop by shape",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "START WITH THE STONE" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Shop by shape" },
+    { "type": "text", "id": "subtext", "label": "Subtext", "default": "Every cut catches the light its own way — pick a silhouette to begin." },
+    { "type": "text", "id": "link_label", "label": "Link label", "default": "View all pieces →" },
+    { "type": "url", "id": "link_url", "label": "Link" },
+    {
+      "type": "text",
+      "id": "shapes",
+      "label": "Shapes (comma separated)",
+      "default": "Round,Oval,Emerald,Princess,Pear,Marquise,Cushion,Asscher,Radiant",
+      "info": "Each links to a product search for that term."
+    },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" },
+    { "type": "header", "content": "Padding" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 100, "step": 4, "unit": "px", "label": "Top padding", "default": 60 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 100, "step": 4, "unit": "px", "label": "Bottom padding", "default": 52 }
+  ],
+  "presets": [
+    { "name": "MJ Shop by shape" }
+  ]
+}
+{% endschema %}

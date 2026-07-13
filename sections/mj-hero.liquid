@@ -1,0 +1,122 @@
+{{ 'section-mj-hero.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign scheme = section.settings.color_scheme
+-%}
+
+<div class="mj-hero color-{{ scheme }} gradient" style="--mj-hero-min:{{ section.settings.height }}vh;">
+  <div class="mj-hero__media">
+    {%- if section.settings.image -%}
+      {{ section.settings.image | image_url: width: 3000 | image_tag:
+        loading: 'eager',
+        fetchpriority: 'high',
+        sizes: '100vw',
+        widths: '750, 1100, 1500, 2000, 2600, 3000',
+        alt: section.settings.image.alt | default: shop.name,
+        class: 'mj-hero__img'
+      }}
+    {%- else -%}
+      <img src="{{ 'mj-hero.jpg' | asset_url }}" alt="{{ shop.name }}" class="mj-hero__img" fetchpriority="high" width="1900" height="950">
+    {%- endif -%}
+    <span class="mj-hero__scrim" aria-hidden="true"></span>
+  </div>
+
+  <div class="mj-hero__inner page-width">
+    <div class="mj-hero__copy">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="mj-hero__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h2 class="mj-hero__heading">{{ section.settings.heading | escape }}</h2>
+      {%- endif -%}
+      {%- if section.settings.text != blank -%}
+        <p class="mj-hero__text">{{ section.settings.text | escape }}</p>
+      {%- endif -%}
+      {%- if section.settings.button_label != blank -%}
+        <div class="mj-hero__ctas">
+          <a href="{{ section.settings.button_link | default: '#' }}" class="button">{{ section.settings.button_label | escape }}</a>
+          {%- if section.settings.link_label != blank -%}
+            <a href="{{ section.settings.link_url | default: '#' }}" class="mj-hero__link link">{{ section.settings.link_label | escape }}</a>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "MJ Photo hero",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Hero image",
+      "info": "Landscape, ~1800×900 or larger. Leave empty to use the bundled default image."
+    },
+    {
+      "type": "range",
+      "id": "height",
+      "min": 60,
+      "max": 100,
+      "step": 2,
+      "unit": "vh",
+      "label": "Section height",
+      "default": 90
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "EVERYDAY FINE JEWELLERY"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Quietly brilliant."
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Text",
+      "default": "Certified diamonds and recycled gold, cut into pieces made for real days — designed to be worn for life."
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Shop the collection"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "text",
+      "id": "link_label",
+      "label": "Secondary link label",
+      "default": "Our promise"
+    },
+    {
+      "type": "url",
+      "id": "link_url",
+      "label": "Secondary link"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-3"
+    }
+  ],
+  "presets": [
+    {
+      "name": "MJ Photo hero"
+    }
+  ]
+}
+{% endschema %}
