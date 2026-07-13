@@ -1884,7 +1884,11 @@ input[type='range'] {
   display: flex;
   gap: 16px;
   overflow-x: auto;
-  padding: 0 var(--pad) 12px;
+  /* Align the strip's start with the centred container, then bleed right */
+  padding-left: max(var(--pad), calc((100% - var(--maxw)) / 2 + var(--pad)));
+  padding-right: var(--pad);
+  padding-bottom: 12px;
+  scroll-padding-left: max(var(--pad), calc((100% - var(--maxw)) / 2 + var(--pad)));
   scrollbar-width: thin;
 }
 

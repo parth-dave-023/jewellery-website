@@ -61,10 +61,14 @@ export default function ProductCard({ product }: { product: Product }) {
         >
           <HeartIcon size={15} filled={wished} />
         </button>
-        <span className={`card-cap mono ${hovered ? 'hide' : ''}`}>
-          {product.type.toUpperCase()} · {product.shape.toUpperCase()}
-        </span>
-        <span className={`card-cap mono alt ${hovered ? '' : 'hide'}`}>{product.hover}</span>
+        {!(real && product.video) && (
+          <>
+            <span className={`card-cap mono ${hovered ? 'hide' : ''}`}>
+              {product.type.toUpperCase()} · {product.shape.toUpperCase()}
+            </span>
+            <span className={`card-cap mono alt ${hovered ? '' : 'hide'}`}>{product.hover}</span>
+          </>
+        )}
         <span className="card-sheen" aria-hidden data-on={hovered} />
         <span className={`card-quick ${hovered ? 'show' : ''}`}>Quick view</span>
       </div>
