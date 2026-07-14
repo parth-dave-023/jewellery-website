@@ -1,0 +1,32 @@
+{%- comment -%}
+  Injects the live Shopify catalogue + shop info into the storefront app.
+  The app (assets/mj-app.js) reads window.MJ_PRODUCTS / window.MJ_SHOPIFY.
+  Product specs (shape, metal, carat, style, tag, blurb, video) come from the
+  `spec` metafields. If no products are published yet, the array is empty and
+  the app falls back to its built-in demo catalogue.
+{%- endcomment -%}
+<script>
+  window.MJ_SHOPIFY = { domain: {{ shop.permanent_domain | json }}, currency: {{ shop.currency | json }} };
+  window.MJ_PRODUCTS = [
+    {%- for product in collections.all.products limit: 200 -%}
+      {%- assign v = product.selected_or_first_available_variant -%}
+      {
+        "id": {{ product.id | json }},
+        "handle": {{ product.handle | json }},
+        "title": {{ product.title | json }},
+        "price": {{ v.price | divided_by: 100.0 | json }},
+        "variantId": {{ v.id | json }},
+        "images": [{%- for img in product.images limit: 6 -%}{{ img | image_url: width: 1200 | json }}{%- unless forloop.last -%},{%- endunless -%}{%- endfor -%}],
+        "video": {{ product.metafields.spec.video_url.value | json }},
+        "type": {{ product.metafields.spec.type.value | json }},
+        "shape": {{ product.metafields.spec.shape.value | json }},
+        "metal": {{ product.metafields.spec.metal.value | json }},
+        "carat": {{ product.metafields.spec.carat.value | json }},
+        "style": {{ product.metafields.spec.style.value | json }},
+        "tag": {{ product.metafields.spec.tag.value | json }},
+        "hover": {{ product.metafields.spec.hover.value | json }},
+        "blurb": {{ product.metafields.spec.blurb.value | json }}
+      }{%- unless forloop.last -%},{%- endunless -%}
+    {%- endfor -%}
+  ];
+</script>
