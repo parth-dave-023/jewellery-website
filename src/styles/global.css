@@ -2439,6 +2439,13 @@ input[type='range'] {
   color: var(--text-3);
 }
 
+.foot-note {
+  margin: 4px 0 14px;
+  text-align: center;
+  font: 300 12px/1.4 var(--ui);
+  color: var(--text-3);
+}
+
 .checkout-head {
   display: flex;
   justify-content: space-between;

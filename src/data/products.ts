@@ -1,4 +1,5 @@
 import { asset } from '../shopifyAssets'
+import { injectedCatalog } from '../shopify'
 
 export type ProductType = 'Rings' | 'Necklaces' | 'Earrings' | 'Bracelets' | 'Pendants'
 export type Shape =
@@ -27,9 +28,11 @@ export interface Product {
   video?: string
   /** Short marketing description for real pieces. */
   blurb?: string
+  /** Shopify variant id (numeric) — present only for real Shopify products. */
+  variantId?: number
 }
 
-export const PRODUCTS: Product[] = [
+const DEMO_PRODUCTS: Product[] = [
   {
     id: 'asimi',
     name: 'Asimi Pear Noir Ring',
@@ -76,6 +79,12 @@ export const PRODUCTS: Product[] = [
   { id: 'iris', name: 'Iris Eternity Ring', type: 'Rings', shape: 'Round', metal: 'White Gold', carat: 0.75, price: 1155, style: 'Eternity', hover: 'SIDE PROFILE' },
   { id: 'astra', name: 'Astra Pear Studs', type: 'Earrings', shape: 'Pear', metal: 'Platinum', carat: 0.8, price: 1110, style: 'Minimalist', tag: 'New', hover: 'ON MODEL' },
 ]
+
+/**
+ * The active catalogue: the live Shopify products when embedded in the store
+ * (injected by the theme), otherwise the demo catalogue for Vercel / local dev.
+ */
+export const PRODUCTS: Product[] = injectedCatalog() ?? DEMO_PRODUCTS
 
 export const TYPES: ProductType[] = ['Rings', 'Necklaces', 'Earrings', 'Bracelets', 'Pendants']
 export const SHAPES: Shape[] = ['Round', 'Oval', 'Emerald', 'Princess', 'Pear', 'Marquise', 'Cushion', 'Asscher', 'Radiant']

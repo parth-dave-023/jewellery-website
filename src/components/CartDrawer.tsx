@@ -1,4 +1,4 @@
-import { METAL_GRADIENTS, formatPrice, photoFor, PRODUCTS } from '../data/products'
+import { METAL_GRADIENTS, formatPrice, cardImageFor, PRODUCTS } from '../data/products'
 import { useStore } from '../store'
 import { CloseIcon, HeartIcon } from './Icons'
 
@@ -34,7 +34,7 @@ export function WishlistPanel() {
                 onClick={() => dispatch({ type: 'openQuick', id: p.id })}
                 aria-label={`View ${p.name}`}
               >
-                <img src={photoFor(p)} alt="" onError={(e) => { e.currentTarget.style.opacity = '0' }} />
+                <img src={cardImageFor(p)} alt="" onError={(e) => { e.currentTarget.style.opacity = '0' }} />
               </button>
               <div className="line-info">
                 <span className="line-name">{p.name}</span>
@@ -60,7 +60,7 @@ export function WishlistPanel() {
 }
 
 export default function CartDrawer() {
-  const { state, dispatch, cartProducts, cartCount, subtotal, total } = useStore()
+  const { state, dispatch, cartProducts, cartCount, subtotal, total, isShopify, checkout } = useStore()
   if (!state.drawerOpen) return null
 
   return (
@@ -84,7 +84,7 @@ export default function CartDrawer() {
           {cartProducts.map(({ product: p, qty }) => (
             <div key={p.id} className="line-item">
               <div className="line-media" style={{ background: METAL_GRADIENTS[p.metal] }}>
-                <img src={photoFor(p)} alt="" onError={(e) => { e.currentTarget.style.opacity = '0' }} />
+                <img src={cardImageFor(p)} alt="" onError={(e) => { e.currentTarget.style.opacity = '0' }} />
               </div>
               <div className="line-info">
                 <span className="line-name">{p.name}</span>
@@ -108,15 +108,19 @@ export default function CartDrawer() {
         </div>
         {cartProducts.length > 0 && (
           <div className="drawer-foot">
-            <div className="foot-row">
+            <div className="foot-row total">
               <span>Subtotal</span>
               <span>{formatPrice(subtotal)}</span>
             </div>
-            <div className="foot-row total">
-              <span>Total (incl. tax)</span>
-              <span>{formatPrice(total)}</span>
-            </div>
-            <button className="btn-ink block" onClick={() => dispatch({ type: 'go', view: 'checkout' })}>
+            {isShopify ? (
+              <p className="foot-note">Taxes &amp; shipping calculated at checkout</p>
+            ) : (
+              <div className="foot-row">
+                <span>Total (incl. tax)</span>
+                <span>{formatPrice(total)}</span>
+              </div>
+            )}
+            <button className="btn-ink block" onClick={checkout}>
               Checkout
             </button>
             <button className="btn-outline block" onClick={() => dispatch({ type: 'go', view: 'cart' })}>

@@ -1,9 +1,9 @@
-import { METAL_GRADIENTS, formatPrice, photoFor } from '../data/products'
+import { METAL_GRADIENTS, formatPrice, cardImageFor } from '../data/products'
 import { useStore } from '../store'
 import { LockIcon } from './Icons'
 
 export default function CartView() {
-  const { dispatch, cartProducts, subtotal, tax, total } = useStore()
+  const { dispatch, cartProducts, subtotal, tax, total, isShopify, checkout } = useStore()
 
   return (
     <main className="container page">
@@ -25,7 +25,7 @@ export default function CartView() {
             {cartProducts.map(({ product: p, qty }) => (
               <div key={p.id} className="cart-line">
                 <div className="line-media large" style={{ background: METAL_GRADIENTS[p.metal] }}>
-                  <img src={photoFor(p)} alt="" onError={(e) => { e.currentTarget.style.opacity = '0' }} />
+                  <img src={cardImageFor(p)} alt="" onError={(e) => { e.currentTarget.style.opacity = '0' }} />
                 </div>
                 <div className="line-info">
                   <span className="line-name">{p.name}</span>
@@ -49,23 +49,35 @@ export default function CartView() {
           </div>
           <aside className="summary-card">
             <h2>Order summary</h2>
-            <div className="foot-row">
-              <span>Subtotal</span>
-              <span>{formatPrice(subtotal)}</span>
-            </div>
-            <div className="foot-row">
-              <span>Tax (3%)</span>
-              <span>{formatPrice(tax)}</span>
-            </div>
-            <div className="foot-row">
-              <span>Shipping</span>
-              <span>Complimentary</span>
-            </div>
-            <div className="foot-row grand">
-              <span>TOTAL</span>
-              <span>{formatPrice(total)}</span>
-            </div>
-            <button className="btn-ink block" onClick={() => dispatch({ type: 'go', view: 'checkout' })}>
+            {isShopify ? (
+              <>
+                <div className="foot-row grand">
+                  <span>SUBTOTAL</span>
+                  <span>{formatPrice(subtotal)}</span>
+                </div>
+                <p className="secure-line">Taxes &amp; shipping calculated at checkout</p>
+              </>
+            ) : (
+              <>
+                <div className="foot-row">
+                  <span>Subtotal</span>
+                  <span>{formatPrice(subtotal)}</span>
+                </div>
+                <div className="foot-row">
+                  <span>Tax (3%)</span>
+                  <span>{formatPrice(tax)}</span>
+                </div>
+                <div className="foot-row">
+                  <span>Shipping</span>
+                  <span>Complimentary</span>
+                </div>
+                <div className="foot-row grand">
+                  <span>TOTAL</span>
+                  <span>{formatPrice(total)}</span>
+                </div>
+              </>
+            )}
+            <button className="btn-ink block" onClick={checkout}>
               Proceed to checkout
             </button>
             <p className="secure-line">

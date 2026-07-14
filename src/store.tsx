@@ -9,6 +9,7 @@ import {
   type Product,
   type SortKey,
 } from './data/products'
+import { isShopify, checkoutWithShopify } from './shopify'
 
 export type View = 'shop' | 'cart' | 'checkout' | 'confirmation'
 export type BrowseMode = 'rail' | 'discover'
@@ -136,9 +137,13 @@ export interface Store {
   total: number
   cartProducts: { product: Product; qty: number }[]
   activeChipCount: number
+  /** True when running inside the Shopify theme (real catalogue + checkout). */
+  isShopify: boolean
   /* helpers */
   scrollToShop: () => void
   shopWithFilters: (filters: Partial<Filters>) => void
+  /** Proceed to checkout: Shopify's hosted checkout when live, else the demo flow. */
+  checkout: () => void
 }
 
 const StoreContext = createContext<Store | null>(null)
@@ -170,6 +175,14 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       setTimeout(scrollToShopEl, 60)
     }
 
+    const checkout = () => {
+      if (isShopify) {
+        void checkoutWithShopify(cartProducts.map(({ product, qty }) => ({ variantId: product.variantId, qty })))
+      } else {
+        dispatch({ type: 'go', view: 'checkout' })
+      }
+    }
+
     return {
       state,
       dispatch,
@@ -180,8 +193,10 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       total: subtotal + tax,
       cartProducts,
       activeChipCount,
+      isShopify,
       scrollToShop: scrollToShopEl,
       shopWithFilters,
+      checkout,
     }
   }, [state])
 
