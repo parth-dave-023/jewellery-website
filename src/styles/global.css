@@ -1884,11 +1884,14 @@ input[type='range'] {
   display: flex;
   gap: 16px;
   overflow-x: auto;
-  /* Align the strip's start with the centred container, then bleed right */
-  padding-left: max(var(--pad), calc((100% - var(--maxw)) / 2 + var(--pad)));
+  /* Editorial left inset: a small, mostly-consistent gap (≈70% tighter than
+     full container alignment) so the strip sits close to the left edge and
+     doesn't balloon on wide screens. */
+  --gallery-inset: max(var(--pad), calc((100% - var(--maxw)) / 2 * 0.25 + var(--pad)));
+  padding-left: var(--gallery-inset);
   padding-right: var(--pad);
   padding-bottom: 12px;
-  scroll-padding-left: max(var(--pad), calc((100% - var(--maxw)) / 2 + var(--pad)));
+  scroll-padding-left: var(--gallery-inset);
   scrollbar-width: thin;
 }
 
