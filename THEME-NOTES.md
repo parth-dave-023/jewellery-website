@@ -1,27 +1,29 @@
-# Minimalist Jewellery — Shopify theme (exact site duplicate)
+# Minimalist Jewellery — Shopify theme
 
-This theme renders the exact Minimalist Jewellery storefront
-(https://jewellery-website-rose.vercel.app) inside Shopify. It is a blank
-Online Store 2.0 theme whose `layout/theme.liquid` mounts the compiled app
-bundle, so the look and every interaction are identical to the live site.
+The live theme for https://minimalistjewellery.com. It is a blank Online Store
+2.0 theme whose `layout/theme.liquid` mounts the compiled storefront app, so the
+whole storefront (browsing, filters, quick view, bag) is that one app.
 
-## How it works
-- `assets/mj-app.js` + `assets/mj-app.css` — the compiled storefront bundle.
-- `layout/theme.liquid` — loads the bundle into `<div id="root">` and injects a
-  `window.MJ_ASSETS` manifest that maps the app's media to Shopify CDN URLs.
-- `assets/mj-hero.png`, `assets/asimi-*.jpg`, `assets/asimi-video.mp4` — media.
-- Every `templates/*.liquid` is a stub — the app renders all views client-side.
+## What's here
+- `assets/mj-app.js` + `assets/mj-app.css` — the compiled storefront app
+  (source is on the `main` branch of this repo).
+- `layout/theme.liquid` — loads the app into `<div id="root">`.
+- `snippets/mj-catalog.liquid` — hands the app the live catalogue
+  (`window.MJ_PRODUCTS`): every product published to the Online Store, with its
+  price, stock, options, photos, video and `spec` metafields.
+- `assets/mj-hero.png` — the homepage hero photo.
+- Every `templates/*.liquid` is a stub — the app renders all views.
 - `layout/password.liquid` — branded "opening soon" gate.
 
-## Import (one click)
-Online Store → Themes → Add theme → Connect from GitHub → this repo, branch
-**`shopify`** → Publish.
+## Where things are managed
+- **Products, prices, stock, photos, videos** — Shopify admin. Nothing is
+  hard-coded here; publish a product to the Online Store and it appears.
+- **Checkout, payments, orders** — Shopify's own hosted checkout.
+- **Design / behaviour** — the app source on `main`.
 
-## Updating the design later
-Rebuild the app (`npm run build -- --base=./` on `main`) and copy the new
-`dist/assets/index-*.js|css` over `assets/mj-app.js|css`.
-
-## Note on commerce
-This duplicates the design + UX exactly. Products/cart/checkout currently run in
-the app (demo data). Wiring real Shopify products & checkout is the next step and
-is tracked separately.
+## Updating the app
+Shopify is connected to this branch and pulls every push.
+1. On `main`: `npm run build -- --base=./`
+2. Copy `dist/assets/index-*.js` over `assets/mj-app.js` and
+   `dist/assets/index-*.css` over `assets/mj-app.css` here.
+3. Commit and push. (Pull first — Shopify's theme editor commits here too.)

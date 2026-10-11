@@ -1,32 +1,54 @@
 {%- comment -%}
-  Injects the live Shopify catalogue + shop info into the storefront app.
-  The app (assets/mj-app.js) reads window.MJ_PRODUCTS / window.MJ_SHOPIFY.
-  Product specs (shape, metal, carat, style, tag, blurb, video) come from the
-  `spec` metafields. If no products are published yet, the array is empty and
-  the app falls back to its built-in demo catalogue.
+  Hands the live Shopify catalogue + shop info to the storefront app
+  (assets/mj-app.js reads window.MJ_SHOPIFY and window.MJ_PRODUCTS).
+
+  Only products published to the Online Store appear. Price, stock, options
+  (e.g. Size), photos and video are the product's own Shopify fields; the
+  optional `spec` metafields add type / shape / metal / carat / style / tag /
+  hover / blurb. Anything left blank is simply not shown by the app, and a
+  piece can only be bought once it has a price and stock.
 {%- endcomment -%}
 <script>
   window.MJ_SHOPIFY = { domain: {{ shop.permanent_domain | json }}, currency: {{ shop.currency | json }} };
+</script>
+<script>
   window.MJ_PRODUCTS = [
-    {%- for product in collections.all.products limit: 200 -%}
-      {%- assign v = product.selected_or_first_available_variant -%}
-      {
-        "id": {{ product.id | json }},
-        "handle": {{ product.handle | json }},
-        "title": {{ product.title | json }},
-        "price": {{ v.price | divided_by: 100.0 | json }},
-        "variantId": {{ v.id | json }},
-        "images": [{%- for img in product.images limit: 6 -%}{{ img | image_url: width: 1200 | json }}{%- unless forloop.last -%},{%- endunless -%}{%- endfor -%}],
-        "video": {{ product.metafields.spec.video_url.value | json }},
-        "type": {{ product.metafields.spec.type.value | json }},
-        "shape": {{ product.metafields.spec.shape.value | json }},
-        "metal": {{ product.metafields.spec.metal.value | json }},
-        "carat": {{ product.metafields.spec.carat.value | json }},
-        "style": {{ product.metafields.spec.style.value | json }},
-        "tag": {{ product.metafields.spec.tag.value | json }},
-        "hover": {{ product.metafields.spec.hover.value | json }},
-        "blurb": {{ product.metafields.spec.blurb.value | json }}
-      }{%- unless forloop.last -%},{%- endunless -%}
-    {%- endfor -%}
+    {%- paginate collections.all.products by 250 -%}
+      {%- for product in collections.all.products -%}
+        {%- assign video = product.media | where: 'media_type', 'video' | first -%}
+        {
+          "id": {{ product.id | json }},
+          "handle": {{ product.handle | json }},
+          "title": {{ product.title | json }},
+          "productType": {{ product.type | json }},
+          "optionName": {{ product.options.first | json }},
+          "variants": [
+            {%- for v in product.variants -%}
+              {
+                "id": {{ v.id | json }},
+                "title": {{ v.title | json }},
+                "price": {{ v.price | divided_by: 100.0 | json }},
+                "available": {{ v.available | json }},
+                "max": {% if v.inventory_management == 'shopify' and v.inventory_policy == 'deny' %}{{ v.inventory_quantity | json }}{% else %}null{% endif %}
+              }{%- unless forloop.last -%},{%- endunless -%}
+            {%- endfor -%}
+          ],
+          "images": [{%- for img in product.images limit: 8 -%}{{ img | image_url: width: 1200 | json }}{%- unless forloop.last -%},{%- endunless -%}{%- endfor -%}],
+          "video": {% if video %}{
+            "poster": {{ video.preview_image | image_url: width: 1200 | json }},
+            "sources": [{%- for s in video.sources -%}{ "url": {{ s.url | json }}, "format": {{ s.format | json }}, "height": {{ s.height | json }} }{%- unless forloop.last -%},{%- endunless -%}{%- endfor -%}]
+          }{% else %}null{% endif %},
+          "videoUrl": {{ product.metafields.spec.video_url.value | json }},
+          "type": {{ product.metafields.spec.type.value | json }},
+          "shape": {{ product.metafields.spec.shape.value | json }},
+          "metal": {{ product.metafields.spec.metal.value | json }},
+          "carat": {{ product.metafields.spec.carat.value | json }},
+          "style": {{ product.metafields.spec.style.value | json }},
+          "tag": {{ product.metafields.spec.tag.value | json }},
+          "hover": {{ product.metafields.spec.hover.value | json }},
+          "blurb": {{ product.metafields.spec.blurb.value | json }}
+        }{%- unless forloop.last -%},{%- endunless -%}
+      {%- endfor -%}
+    {%- endpaginate -%}
   ];
 </script>
