@@ -27,7 +27,19 @@
   </head>
   <body>
     <div id="root"></div>
-    {{ content_for_layout }}
+    {%- comment -%}
+      The app renders every storefront view itself, so whatever a template would
+      output on these page types is deliberately discarded. That keeps leftover
+      sections (the theme still holds some from its first import) and anything
+      added by accident in the theme editor from ever showing under the footer.
+      Shopify's own pages (captcha, policies, gift cards, accounts) render as usual.
+    {%- endcomment -%}
+    {%- assign app_pages = 'index,product,collection,list-collections,cart,search,404,blog,article,page' | split: ',' -%}
+    {%- if app_pages contains request.page_type -%}
+      {%- capture discarded -%}{{ content_for_layout }}{%- endcapture -%}
+    {%- else -%}
+      {{ content_for_layout }}
+    {%- endif %}
     <script type="module" src="{{ 'mj-app.js' | asset_url }}"></script>
   </body>
 </html>
