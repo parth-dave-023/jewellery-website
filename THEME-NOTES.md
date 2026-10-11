@@ -12,7 +12,8 @@ whole storefront (browsing, filters, quick view, bag) is that one app.
   (`window.MJ_PRODUCTS`): every product published to the Online Store, with its
   price, stock, options, photos, video and `spec` metafields.
 - `assets/mj-hero.png` — the homepage hero photo.
-- Every `templates/*.liquid` is a stub — the app renders all views.
+- Every template is empty (`{"sections": {}, "order": []}`) — the app renders all
+  views. A product URL opens that piece; a collection URL opens that category.
 - `layout/password.liquid` — branded "opening soon" gate.
 
 ## Where things are managed
