@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { CARAT_BUCKETS, PRICE_CAP, formatPrice, type SortKey } from '../data/products'
+import { CARAT_BUCKETS, HAS_CARATS, HAS_PRICES, PRICE_CAP, PRODUCTS, formatPrice, type SortKey } from '../data/products'
 import { useStore } from '../store'
 import FilterRail from './FilterRail'
 import DiscoverPanel from './DiscoverPanel'
@@ -48,15 +48,17 @@ export default function Collection() {
         <span className="result-count">
           {results.length} {results.length === 1 ? 'piece' : 'pieces'}
         </span>
-        <label className="sort">
-          <span>SORT</span>
-          <select value={state.sort} onChange={(e) => dispatch({ type: 'setSort', sort: e.target.value as SortKey })}>
-            <option value="featured">Featured</option>
-            <option value="price-asc">Price: Low → High</option>
-            <option value="price-desc">Price: High → Low</option>
-            <option value="carat-desc">Carat: High → Low</option>
-          </select>
-        </label>
+        {(HAS_PRICES || HAS_CARATS) && (
+          <label className="sort">
+            <span>SORT</span>
+            <select value={state.sort} onChange={(e) => dispatch({ type: 'setSort', sort: e.target.value as SortKey })}>
+              <option value="featured">Featured</option>
+              {HAS_PRICES && <option value="price-asc">Price: Low → High</option>}
+              {HAS_PRICES && <option value="price-desc">Price: High → Low</option>}
+              {HAS_CARATS && <option value="carat-desc">Carat: High → Low</option>}
+            </select>
+          </label>
+        )}
       </div>
       {results.length > 0 ? (
         <div className="product-grid">
@@ -74,6 +76,23 @@ export default function Collection() {
       )}
     </>
   )
+
+  // Nothing published in Shopify yet: say so plainly instead of showing empty filters.
+  if (PRODUCTS.length === 0) {
+    return (
+      <section id="shop" className="collection container">
+        <div className="collection-head">
+          <div>
+            <span className="eyebrow">THE COLLECTION</span>
+            <h2>Find your piece</h2>
+          </div>
+        </div>
+        <div className="empty-panel">
+          <p>The collection is being updated — please check back shortly.</p>
+        </div>
+      </section>
+    )
+  }
 
   return (
     <section id="shop" className="collection container">

@@ -3,11 +3,13 @@ import {
   EMPTY_FILTERS,
   TAX_RATE,
   PRODUCTS,
+  canBuy,
   passes,
   sortProducts,
   type Filters,
   type Product,
   type SortKey,
+  type Variant,
 } from './data/products'
 import { isShopify, checkoutWithShopify } from './shopify'
 
@@ -16,7 +18,19 @@ export type BrowseMode = 'rail' | 'discover'
 
 export interface CartLine {
   id: string
+  /** Chosen option, for pieces that come in more than one (e.g. a hoop size). */
+  variantId?: number
   qty: number
+}
+
+/** Identifies a bag line: the same piece in two sizes is two lines. */
+export const lineKey = (l: { id: string; variantId?: number }): string =>
+  l.variantId ? `${l.id}#${l.variantId}` : l.id
+
+const findLine = (l: { id: string; variantId?: number }) => {
+  const product = PRODUCTS.find((p) => p.id === l.id)
+  const variant = product?.variants?.find((v) => v.id === l.variantId)
+  return { product, variant }
 }
 
 interface State {
@@ -56,9 +70,9 @@ type Action =
   | { type: 'clearFilters' }
   | { type: 'setSort'; sort: SortKey }
   | { type: 'setBrowse'; mode: BrowseMode }
-  | { type: 'addToCart'; id: string }
-  | { type: 'changeQty'; id: string; delta: number }
-  | { type: 'removeItem'; id: string }
+  | { type: 'addToCart'; id: string; variantId?: number }
+  | { type: 'changeQty'; key: string; delta: number }
+  | { type: 'removeItem'; key: string }
   | { type: 'toggleWish'; id: string }
   | { type: 'setDrawer'; open: boolean }
   | { type: 'setWishlistPanel'; open: boolean }
@@ -86,20 +100,30 @@ const reducer = (s: State, a: Action): State => {
     case 'setBrowse':
       return { ...s, browseMode: a.mode }
     case 'addToCart': {
-      const exists = s.cart.some((c) => c.id === a.id)
+      // Only priced, in-stock pieces go in the bag — and a piece with options needs one chosen.
+      const { product, variant } = findLine(a)
+      if (!product || (product.variants && !variant) || !canBuy(product, variant)) return s
+      const key = lineKey(a)
+      const max = (variant ?? product).max ?? Infinity
+      const exists = s.cart.some((c) => lineKey(c) === key)
       const cart = exists
-        ? s.cart.map((c) => (c.id === a.id ? { ...c, qty: c.qty + 1 } : c))
-        : [...s.cart, { id: a.id, qty: 1 }]
+        ? s.cart.map((c) => (lineKey(c) === key ? { ...c, qty: Math.min(c.qty + 1, max) } : c))
+        : [...s.cart, { id: a.id, variantId: variant?.id, qty: 1 }]
       return { ...s, cart, drawerOpen: true, quickViewId: null, wishlistOpen: false, searchOpen: false }
     }
     case 'changeQty': {
       const cart = s.cart
-        .map((c) => (c.id === a.id ? { ...c, qty: c.qty + a.delta } : c))
+        .map((c) => {
+          if (lineKey(c) !== a.key) return c
+          const { product, variant } = findLine(c)
+          const max = (variant ?? product)?.max ?? Infinity
+          return { ...c, qty: Math.min(c.qty + a.delta, max) }
+        })
         .filter((c) => c.qty > 0)
       return { ...s, cart }
     }
     case 'removeItem':
-      return { ...s, cart: s.cart.filter((c) => c.id !== a.id) }
+      return { ...s, cart: s.cart.filter((c) => lineKey(c) !== a.key) }
     case 'toggleWish':
       return {
         ...s,
@@ -135,7 +159,17 @@ export interface Store {
   subtotal: number
   tax: number
   total: number
-  cartProducts: { product: Product; qty: number }[]
+  cartProducts: {
+    key: string
+    product: Product
+    /** The chosen option, when the piece has options. */
+    variant?: Variant
+    qty: number
+    /** Unit price of this line. */
+    price: number
+    /** Most that can be ordered, when Shopify tracks stock for it. */
+    max?: number
+  }[]
   activeChipCount: number
   /** True when running inside the Shopify theme (real catalogue + checkout). */
   isShopify: boolean
@@ -159,10 +193,12 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     const filtered = PRODUCTS.filter((p) => passes(p, state.filters))
     const results = sortProducts(filtered, state.sort)
     const cartProducts = state.cart.flatMap((c) => {
-      const product = PRODUCTS.find((p) => p.id === c.id)
-      return product ? [{ product, qty: c.qty }] : []
+      const { product, variant } = findLine(c)
+      if (!product) return []
+      const price = variant?.price ?? product.price
+      return [{ key: lineKey(c), product, variant, qty: c.qty, price, max: (variant ?? product).max }]
     })
-    const subtotal = cartProducts.reduce((sum, { product, qty }) => sum + product.price * qty, 0)
+    const subtotal = cartProducts.reduce((sum, { price, qty }) => sum + price * qty, 0)
     const tax = Math.round(subtotal * TAX_RATE)
     const f = state.filters
     const activeChipCount =
@@ -177,7 +213,9 @@ export function StoreProvider({ children }: { children: ReactNode }) {
 
     const checkout = () => {
       if (isShopify) {
-        void checkoutWithShopify(cartProducts.map(({ product, qty }) => ({ variantId: product.variantId, qty })))
+        void checkoutWithShopify(
+          cartProducts.map(({ product, variant, qty }) => ({ variantId: variant?.id ?? product.variantId, qty })),
+        )
       } else {
         dispatch({ type: 'go', view: 'checkout' })
       }

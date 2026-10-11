@@ -1,38 +1,43 @@
-# Auren — Fine Jewellery Storefront
+# Minimalist Jewellery — storefront
 
-A luxury single-page e-commerce storefront for a diamond jewellery brand, built from the
-design handoff in [`design-handoff/`](design-handoff/). React 19 + Vite + TypeScript, no other
-runtime dependencies.
+The storefront for [minimalistjewellery.com](https://minimalistjewellery.com), which runs on
+Shopify. It is a single-page React app (React 19 + Vite + TypeScript) embedded in a blank
+Shopify theme.
+
+## How it fits together
+
+- **`main` branch** — the app's source code (this branch).
+- **`shopify` branch** — the Shopify theme: the compiled app (`assets/mj-app.js`,
+  `assets/mj-app.css`) plus a handful of Liquid files. Shopify is connected to this branch
+  and updates the live theme on every push.
+- **Shopify admin** — products, prices, stock, photos and videos. None of that lives in
+  this repo. The theme hands the published catalogue to the app
+  (`snippets/mj-catalog.liquid` → `window.MJ_PRODUCTS`), and checkout is Shopify's own.
+
+## What the storefront reads from each product
+
+Standard Shopify fields: title, price, inventory, options (e.g. Size), photos and video.
+
+Optional metafields in the `spec` namespace: `type`, `shape`, `metal`, `carat`, `style`,
+`tag`, `blurb`, `hover`, `video_url`. Anything left blank is simply not shown.
+
+A piece shows "Price on request" and cannot be added to the bag until it has both a price
+and stock in Shopify.
 
 ## Run locally
 
 ```bash
 npm install
 npm run dev      # http://localhost:3004
-npm run build    # typecheck + production build to dist/
 ```
 
-## What's inside
+Local dev previews a snapshot of the catalogue (`src/data/previewCatalog.ts`) and a demo
+checkout; nothing from it ships to the store.
 
-Everything lives on one page except the bag, checkout and order-confirmation views
-(in-app view switches, per the handoff):
+## Publish a change
 
-- **Lookbook hero** — an interactive page-turn "book" replaces the static hero image.
-  Pages carry campaign photography, a chapter story and a CTA that filters the collection.
-- **The Collection** — 24 products, live faceted filtering (category, diamond shape, metal,
-  carat, price, style) with per-facet counts, Refine (filter rail) / Discover (facet band)
-  browse modes, sorting, active-filter chips.
-- **Product quick-view, cart drawer, wishlist panel, live search overlay.**
-- **Cart → checkout → confirmation** with GST (3%) totals in INR formatting.
-- **Depth sections** — curated edits, craftsmanship story, 4 Cs diamond education,
-  the Auren promise, bespoke band, testimonials, journal, "as worn" gallery, FAQ,
-  newsletter.
-
-## Notes
-
-- Product and campaign photography are **Unsplash placeholders** (metal-tinted gradients as
-  fallback) — swap for colour-managed studio photography before launch.
-- "Auren" is a placeholder brand name. Payment, accounts and journal links are demo-only;
-  no real payment is processed.
-- Design tokens (colour, type, spacing, radii, motion) follow the handoff spec:
-  Marcellus / Jost, "Icy Platinum" palette, 1340px content width.
+1. On `main`: `npm run build -- --base=./`
+2. On the `shopify` branch (pull first — Shopify's theme editor commits there too), copy
+   `dist/assets/index-*.js` over `assets/mj-app.js` and `dist/assets/index-*.css` over
+   `assets/mj-app.css`.
+3. Commit and push `shopify`. Shopify picks it up within a minute.

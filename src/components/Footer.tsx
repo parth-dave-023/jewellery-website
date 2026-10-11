@@ -49,7 +49,7 @@ export default function Footer() {
         </div>
       </div>
       <div className="container footer-base">
-        <span>© {new Date().getFullYear()} Minimalist Jewellery. A demonstration storefront.</span>
+        <span>© {new Date().getFullYear()} Minimalist Jewellery.</span>
         <span className="mono">IGI · GIA CERTIFIED / SECURE CHECKOUT / MADE IN INDIA</span>
       </div>
     </footer>

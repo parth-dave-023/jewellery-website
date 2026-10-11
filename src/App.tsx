@@ -11,10 +11,8 @@ import {
   Faq,
   FourCs,
   Gallery,
-  Journal,
   Newsletter,
   PromiseBand,
-  Testimonials,
 } from './components/Sections'
 import CartView from './components/CartView'
 import CheckoutView from './components/CheckoutView'
@@ -34,8 +32,6 @@ function ShopView() {
       <FourCs />
       <PromiseBand />
       <Bespoke />
-      <Testimonials />
-      <Journal />
       <Gallery />
       <Faq />
       <Newsletter />

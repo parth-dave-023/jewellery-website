@@ -178,6 +178,23 @@ h1, h2, h3, .page-title {
   color: #fff;
 }
 
+.btn-outline.grow {
+  flex: 1;
+  gap: 10px;
+  padding: 17px 24px;
+}
+
+.btn-outline.grow.wished {
+  border-color: var(--accent);
+}
+
+.btn-ink:disabled,
+.btn-outline:disabled {
+  opacity: 0.45;
+  cursor: default;
+  pointer-events: none;
+}
+
 .icon-btn {
   position: relative;
   display: inline-flex;
@@ -929,8 +946,8 @@ h1, h2, h3, .page-title {
 }
 
 .shape-card {
-  flex: none;
-  width: 140px;
+  /* Share the row evenly when there are only a few shapes; scroll when there are many. */
+  flex: 1 0 140px;
   scroll-snap-align: start;
   background: var(--surface);
   border: 1px solid var(--hair-10);
@@ -1004,7 +1021,7 @@ h1, h2, h3, .page-title {
 }
 
 .edit-media {
-  aspect-ratio: 4 / 5;
+  aspect-ratio: 1 / 1;
   border-radius: 3px;
   overflow: hidden;
   background: var(--bg-alt);
@@ -1110,6 +1127,13 @@ h1, h2, h3, .page-title {
   background: var(--accent);
   border-color: var(--accent);
   color: #fff;
+}
+
+.chip:disabled {
+  opacity: 0.4;
+  text-decoration: line-through;
+  cursor: default;
+  pointer-events: none;
 }
 
 .shop-grid {
@@ -1410,6 +1434,10 @@ input[type='range'] {
   pointer-events: none;
 }
 
+.card-media.has-photo::after {
+  display: none;
+}
+
 .card-media img {
   position: absolute;
   inset: 0;
@@ -1526,7 +1554,8 @@ input[type='range'] {
   bottom: 0;
   width: 45%;
   background: linear-gradient(105deg, transparent, rgba(255, 255, 255, 0.5), transparent);
-  transform: translateX(-130%) skewX(-18deg);
+  /* parked fully outside the card (the skew would otherwise poke a corner into view) */
+  transform: translateX(-180%) skewX(-18deg);
   transition: transform 1s ease;
   pointer-events: none;
   z-index: 1;
@@ -1576,12 +1605,20 @@ input[type='range'] {
 
 .card-foot {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
+  gap: 8px 10px;
 }
 
 .card-price {
   font: 400 15px/1 var(--ui);
+}
+
+.card-price.on-request {
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  color: var(--text-2);
 }
 
 /* ============ Story / craftsmanship ============ */
@@ -1604,6 +1641,11 @@ input[type='range'] {
 
 .story-row.flip .story-media {
   order: 2;
+}
+
+.story-row.solo,
+.bespoke-inner.solo {
+  grid-template-columns: 1fr;
 }
 
 .story-media {
@@ -1781,100 +1823,6 @@ input[type='range'] {
   object-fit: cover;
 }
 
-/* ============ Testimonials ============ */
-.testimonials {
-  padding: 84px 0 60px;
-}
-
-.quote-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 22px;
-}
-
-.quote-card {
-  background: var(--surface);
-  border: 1px solid var(--hair-08);
-  border-radius: 4px;
-  padding: 30px 28px;
-  display: flex;
-  flex-direction: column;
-}
-
-.quote-mark {
-  font: 400 46px/0.6 var(--display);
-  color: rgba(20, 24, 27, 0.16);
-  margin-bottom: 14px;
-}
-
-.quote-card blockquote {
-  font: 300 15px/1.7 var(--ui);
-  color: var(--text-2);
-  flex: 1;
-}
-
-.quote-card figcaption {
-  margin-top: 22px;
-  padding-top: 16px;
-  border-top: 1px solid var(--hair-08);
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-}
-
-.quote-name {
-  font: 400 14px/1 var(--ui);
-}
-
-/* ============ Journal ============ */
-.journal {
-  padding-bottom: 84px;
-  padding-top: 24px;
-}
-
-.journal-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 26px;
-}
-
-.journal-card {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.journal-media {
-  aspect-ratio: 7 / 5;
-  border-radius: 3px;
-  overflow: hidden;
-  margin-bottom: 10px;
-}
-
-.journal-media img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 1s cubic-bezier(0.2, 0.8, 0.2, 1);
-}
-
-.journal-card:hover .journal-media img {
-  transform: scale(1.04);
-}
-
-.journal-card h3 {
-  font-size: 20px;
-}
-
-.journal-card p {
-  font: 300 13.5px/1.6 var(--ui);
-  color: var(--text-2);
-}
-
-.journal-time {
-  margin-top: 4px;
-}
-
 /* ============ Gallery ============ */
 .gallery {
   padding-bottom: 84px;
@@ -1900,11 +1848,23 @@ input[type='range'] {
   width: 240px;
 }
 
-.gallery-item img {
-  aspect-ratio: 4 / 5;
-  object-fit: cover;
-  border-radius: 3px;
+.gallery-item button {
+  display: block;
   width: 100%;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.gallery-item img {
+  display: block;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  width: 100%;
+  transition: transform 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.gallery-item button:hover img {
+  transform: scale(1.04);
 }
 
 .gallery-item figcaption {
@@ -2184,6 +2144,12 @@ input[type='range'] {
   color: var(--ink);
 }
 
+.stepper button:disabled {
+  opacity: 0.3;
+  cursor: default;
+  pointer-events: none;
+}
+
 .stepper span {
   min-width: 26px;
   text-align: center;
@@ -2269,7 +2235,8 @@ input[type='range'] {
 
 .qv-stage {
   position: relative;
-  flex: 1;
+  /* always square, like the photography — never stretched or side-cropped */
+  flex: none;
   aspect-ratio: 1 / 1;
   border-radius: 3px;
   overflow: hidden;
@@ -2353,9 +2320,24 @@ input[type='range'] {
   margin-top: 24px;
 }
 
+.qv-option {
+  margin-top: 24px;
+}
+
+.qv-option-label {
+  display: block;
+  font: 400 12px/1 var(--ui);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin-bottom: 12px;
+}
+
 .qv-spec-row {
   display: flex;
   justify-content: space-between;
+  align-items: baseline;
+  gap: 18px;
   padding: 13px 0;
   border-bottom: 1px solid var(--hair-08);
 }
@@ -2368,7 +2350,8 @@ input[type='range'] {
 }
 
 .qv-spec-row dd {
-  font: 300 14px/1 var(--ui);
+  font: 300 14px/1.35 var(--ui);
+  text-align: right;
 }
 
 .qv-actions {
@@ -2698,11 +2681,6 @@ input[type='range'] {
   .fourcs-grid {
     grid-template-columns: repeat(2, 1fr);
   }
-
-  .quote-grid,
-  .journal-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
 }
 
 @media (max-width: 900px) {
@@ -2796,6 +2774,17 @@ input[type='range'] {
   }
 }
 
+/* Wide-but-short small screens (landscape phones, squat windows): the hero
+   photo's built-in wordmark would peek in from the left edge, so keep the
+   desktop side scrim there. */
+@media (max-width: 900px) and (min-aspect-ratio: 39 / 50) {
+  .hero-photo-scrim {
+    background:
+      linear-gradient(90deg, rgba(247, 243, 236, 1) 0%, rgba(247, 243, 236, 1) 33%, rgba(247, 243, 236, 0.55) 50%, rgba(247, 243, 236, 0) 68%),
+      linear-gradient(0deg, rgba(247, 243, 236, 0.6) 0%, rgba(247, 243, 236, 0) 34%);
+  }
+}
+
 @media (max-width: 560px) {
   :root {
     --pad: 18px;
@@ -2803,8 +2792,6 @@ input[type='range'] {
 
   .edits-grid,
   .fourcs-grid,
-  .quote-grid,
-  .journal-grid,
   .next-grid {
     grid-template-columns: 1fr;
   }

@@ -1,4 +1,4 @@
-import { METAL_GRADIENTS, formatPrice, cardImageFor } from '../data/products'
+import { cardImageFor, formatPrice, mediaBackground, sized, specLine } from '../data/products'
 import { useStore } from '../store'
 import { LockIcon } from './Icons'
 
@@ -22,30 +22,37 @@ export default function CartView() {
       ) : (
         <div className="cart-grid">
           <div className="cart-lines">
-            {cartProducts.map(({ product: p, qty }) => (
-              <div key={p.id} className="cart-line">
-                <div className="line-media large" style={{ background: METAL_GRADIENTS[p.metal] }}>
-                  <img src={cardImageFor(p)} alt="" onError={(e) => { e.currentTarget.style.opacity = '0' }} />
-                </div>
-                <div className="line-info">
-                  <span className="line-name">{p.name}</span>
-                  <span className="line-spec">
-                    {p.shape} · {p.metal} · {p.carat} ct
-                  </span>
-                  <div className="line-row">
-                    <span className="stepper">
-                      <button aria-label="Decrease quantity" onClick={() => dispatch({ type: 'changeQty', id: p.id, delta: -1 })}>−</button>
-                      <span>{qty}</span>
-                      <button aria-label="Increase quantity" onClick={() => dispatch({ type: 'changeQty', id: p.id, delta: 1 })}>+</button>
-                    </span>
-                    <button className="line-remove" onClick={() => dispatch({ type: 'removeItem', id: p.id })}>
-                      Remove
-                    </button>
+            {cartProducts.map(({ key, product: p, variant, qty, price, max }) => {
+              const photo = cardImageFor(p)
+              return (
+                <div key={key} className="cart-line">
+                  <div className="line-media large" style={{ background: mediaBackground(p) }}>
+                    {photo && <img src={sized(photo, 320)} alt="" onError={(e) => { e.currentTarget.style.opacity = '0' }} />}
                   </div>
+                  <div className="line-info">
+                    <span className="line-name">{p.name}</span>
+                    <span className="line-spec">{[variant?.label, specLine(p)].filter(Boolean).join(' · ')}</span>
+                    <div className="line-row">
+                      <span className="stepper">
+                        <button aria-label="Decrease quantity" onClick={() => dispatch({ type: 'changeQty', key, delta: -1 })}>−</button>
+                        <span>{qty}</span>
+                        <button
+                          aria-label="Increase quantity"
+                          disabled={max !== undefined && qty >= max}
+                          onClick={() => dispatch({ type: 'changeQty', key, delta: 1 })}
+                        >
+                          +
+                        </button>
+                      </span>
+                      <button className="line-remove" onClick={() => dispatch({ type: 'removeItem', key })}>
+                        Remove
+                      </button>
+                    </div>
+                  </div>
+                  <span className="line-total">{formatPrice(price * qty)}</span>
                 </div>
-                <span className="line-total">{formatPrice(p.price * qty)}</span>
-              </div>
-            ))}
+              )
+            })}
           </div>
           <aside className="summary-card">
             <h2>Order summary</h2>

@@ -1,5 +1,6 @@
 import { useState, type FormEvent } from 'react'
-import { EDITS, FAQS, FOUR_CS, GALLERY, JOURNAL, STORY_ROWS, TESTIMONIALS } from '../data/content'
+import { BESPOKE_PHOTO, CLOSE_UPS, EDITS, FAQS, FOUR_CS, STORY_ROWS } from '../data/content'
+import { sized } from '../data/products'
 import { useStore } from '../store'
 import { PlusIcon } from './Icons'
 
@@ -7,18 +8,19 @@ import { PlusIcon } from './Icons'
 
 export function EditsBand() {
   const { shopWithFilters } = useStore()
+  if (EDITS.length === 0) return null
   return (
     <section className="edits container">
       <div className="sec-head">
         <span className="eyebrow">CURATED FOR YOU</span>
-        <h2>Shop by moment</h2>
-        <p className="sec-sub">Four edits, hand-picked from the collection — one click filters the pieces below.</p>
+        <h2>Shop the edits</h2>
+        <p className="sec-sub">A few ways into the collection — one click filters the pieces below.</p>
       </div>
       <div className="edits-grid">
         {EDITS.map((e) => (
           <button key={e.id} className="edit-card" onClick={() => shopWithFilters(e.filters)}>
             <span className="edit-media">
-              <img src={e.img} alt="" loading="lazy" />
+              <img src={sized(e.photo.src, 800)} alt="" loading="lazy" />
             </span>
             <span className="edit-title">{e.title}</span>
             <span className="edit-blurb">{e.blurb}</span>
@@ -41,10 +43,12 @@ export function Craftsmanship() {
           <h2>Made slowly, on purpose</h2>
         </div>
         {STORY_ROWS.map((row, i) => (
-          <div key={row.title} className={`story-row ${i % 2 ? 'flip' : ''}`}>
-            <div className="story-media">
-              <img src={row.img} alt={row.title} loading="lazy" />
-            </div>
+          <div key={row.title} className={`story-row ${i % 2 ? 'flip' : ''} ${row.photo ? '' : 'solo'}`}>
+            {row.photo && (
+              <div className="story-media">
+                <img src={sized(row.photo.src, 1200)} alt={row.photo.alt} loading="lazy" />
+              </div>
+            )}
             <div className="story-copy">
               <span className="eyebrow small">{row.eyebrow}</span>
               <h3>{row.title}</h3>
@@ -91,7 +95,7 @@ export function FourCs() {
   )
 }
 
-/* ---------- The Auren promise ---------- */
+/* ---------- The promise ---------- */
 
 const PROMISES = [
   {
@@ -135,7 +139,7 @@ export function PromiseBand() {
 export function Bespoke() {
   return (
     <section className="bespoke container">
-      <div className="bespoke-inner">
+      <div className={`bespoke-inner ${BESPOKE_PHOTO ? '' : 'solo'}`}>
         <div className="bespoke-copy">
           <span className="eyebrow small">BESPOKE</span>
           <h2>Have something in mind?</h2>
@@ -149,91 +153,37 @@ export function Bespoke() {
           </a>
           <span className="bespoke-note mono">NO COMMITMENT UNTIL YOU APPROVE THE RENDER</span>
         </div>
-        <div className="bespoke-media">
-          <img
-            src="https://images.unsplash.com/photo-1512163143273-bde0e3cc7407?w=900&h=1050&fit=crop&q=75"
-            alt="A bespoke ring presented in a gift box"
-            loading="lazy"
-          />
-        </div>
+        {BESPOKE_PHOTO && (
+          <div className="bespoke-media">
+            <img src={sized(BESPOKE_PHOTO.src, 1200)} alt={BESPOKE_PHOTO.alt} loading="lazy" />
+          </div>
+        )}
       </div>
     </section>
   )
 }
 
-/* ---------- Testimonials ---------- */
-
-export function Testimonials() {
-  return (
-    <section className="testimonials">
-      <div className="container">
-        <div className="sec-head">
-          <span className="eyebrow">WORD OF MOUTH</span>
-          <h2>From the people wearing it</h2>
-        </div>
-        <div className="quote-grid">
-          {TESTIMONIALS.map((t) => (
-            <figure key={t.name} className="quote-card">
-              <span className="quote-mark" aria-hidden>“</span>
-              <blockquote>{t.quote}</blockquote>
-              <figcaption>
-                <span className="quote-name">{t.name} · {t.city}</span>
-                <span className="quote-piece mono">{t.piece.toUpperCase()}</span>
-              </figcaption>
-            </figure>
-          ))}
-        </div>
-      </div>
-    </section>
-  )
-}
-
-/* ---------- Journal ---------- */
-
-export function Journal() {
-  return (
-    <section className="journal container">
-      <div className="sec-head row">
-        <div>
-          <span className="eyebrow">THE JOURNAL</span>
-          <h2>Notes on diamonds & care</h2>
-        </div>
-        <span className="text-link muted" title="Journal launches with the full site">View all stories →</span>
-      </div>
-      <div className="journal-grid">
-        {JOURNAL.map((post) => (
-          <article key={post.title} className="journal-card">
-            <div className="journal-media">
-              <img src={post.img} alt="" loading="lazy" />
-            </div>
-            <span className="eyebrow small">{post.eyebrow}</span>
-            <h3>{post.title}</h3>
-            <p>{post.excerpt}</p>
-            <span className="journal-time mono">{post.readTime.toUpperCase()}</span>
-          </article>
-        ))}
-      </div>
-    </section>
-  )
-}
-
-/* ---------- Gallery — as worn ---------- */
+/* ---------- Close-ups ---------- */
 
 export function Gallery() {
+  const { dispatch } = useStore()
+  if (CLOSE_UPS.length < 3) return null
   return (
     <section className="gallery">
       <div className="container">
         <div className="sec-head">
-          <span className="eyebrow">AS WORN</span>
-          <h2>#MinimalistJewellery</h2>
-          <p className="sec-sub">Real pieces on real people — tag us to be featured.</p>
+          <span className="eyebrow">UP CLOSE</span>
+          <h2>The collection in detail</h2>
+          <p className="sec-sub">Tap any piece to see it from every angle.</p>
         </div>
       </div>
       <div className="gallery-scroll">
-        {GALLERY.map((g) => (
-          <figure key={g.caption} className="gallery-item">
-            <img src={g.img} alt={g.caption} loading="lazy" />
-            <figcaption className="mono">{g.caption}</figcaption>
+        {CLOSE_UPS.map((g) => (
+          <figure key={g.productId} className="gallery-item">
+            <button onClick={() => dispatch({ type: 'openQuick', id: g.productId })} aria-label={`View ${g.alt}`}>
+              <img src={sized(g.src, 640)} alt={g.alt} loading="lazy" />
+            </button>
+            <figcaption className="mono">{g.alt}</figcaption>
           </figure>
         ))}
       </div>

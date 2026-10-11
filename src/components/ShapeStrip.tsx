@@ -4,6 +4,7 @@ import DiamondIcon from './DiamondIcon'
 
 export default function ShapeStrip() {
   const { shopWithFilters, dispatch, scrollToShop } = useStore()
+  if (SHAPES.length === 0) return null
 
   return (
     <section className="shape-strip container">

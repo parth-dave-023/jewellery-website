@@ -1,4 +1,13 @@
-import { METAL_GRADIENTS, formatPrice, cardImageFor, PRODUCTS } from '../data/products'
+import {
+  PRODUCTS,
+  canBuy,
+  cardImageFor,
+  formatPrice,
+  mediaBackground,
+  priceLabel,
+  sized,
+  specLine,
+} from '../data/products'
 import { useStore } from '../store'
 import { CloseIcon, HeartIcon } from './Icons'
 
@@ -26,33 +35,41 @@ export function WishlistPanel() {
               <span className="drawer-empty-sub">Tap the heart on any piece to keep it here.</span>
             </div>
           )}
-          {items.map((p) => (
-            <div key={p.id} className="line-item">
-              <button
-                className="line-media"
-                style={{ background: METAL_GRADIENTS[p.metal] }}
-                onClick={() => dispatch({ type: 'openQuick', id: p.id })}
-                aria-label={`View ${p.name}`}
-              >
-                <img src={cardImageFor(p)} alt="" onError={(e) => { e.currentTarget.style.opacity = '0' }} />
-              </button>
-              <div className="line-info">
-                <span className="line-name">{p.name}</span>
-                <span className="line-spec">
-                  {p.metal} · {p.carat} ct
-                </span>
-                <div className="line-row">
-                  <span className="line-price">{formatPrice(p.price)}</span>
-                  <button className="btn-outline small" onClick={() => dispatch({ type: 'addToCart', id: p.id })}>
-                    Add to bag
-                  </button>
+          {items.map((p) => {
+            const photo = cardImageFor(p)
+            return (
+              <div key={p.id} className="line-item">
+                <button
+                  className="line-media"
+                  style={{ background: mediaBackground(p) }}
+                  onClick={() => dispatch({ type: 'openQuick', id: p.id })}
+                  aria-label={`View ${p.name}`}
+                >
+                  {photo && <img src={sized(photo, 200)} alt="" onError={(e) => { e.currentTarget.style.opacity = '0' }} />}
+                </button>
+                <div className="line-info">
+                  <span className="line-name">{p.name}</span>
+                  <span className="line-spec">{specLine(p)}</span>
+                  <div className="line-row">
+                    <span className="line-price">{priceLabel(p)}</span>
+                    {canBuy(p) &&
+                      (p.variants ? (
+                        <button className="btn-outline small" onClick={() => dispatch({ type: 'openQuick', id: p.id })}>
+                          Select
+                        </button>
+                      ) : (
+                        <button className="btn-outline small" onClick={() => dispatch({ type: 'addToCart', id: p.id })}>
+                          Add to bag
+                        </button>
+                      ))}
+                  </div>
                 </div>
+                <button className="line-remove" onClick={() => dispatch({ type: 'toggleWish', id: p.id })}>
+                  Remove
+                </button>
               </div>
-              <button className="line-remove" onClick={() => dispatch({ type: 'toggleWish', id: p.id })}>
-                Remove
-              </button>
-            </div>
-          ))}
+            )
+          })}
         </div>
       </aside>
     </div>
@@ -81,30 +98,37 @@ export default function CartDrawer() {
               </button>
             </div>
           )}
-          {cartProducts.map(({ product: p, qty }) => (
-            <div key={p.id} className="line-item">
-              <div className="line-media" style={{ background: METAL_GRADIENTS[p.metal] }}>
-                <img src={cardImageFor(p)} alt="" onError={(e) => { e.currentTarget.style.opacity = '0' }} />
-              </div>
-              <div className="line-info">
-                <span className="line-name">{p.name}</span>
-                <span className="line-spec">
-                  {p.shape} · {p.metal} · {p.carat} ct
-                </span>
-                <div className="line-row">
-                  <span className="stepper">
-                    <button aria-label="Decrease quantity" onClick={() => dispatch({ type: 'changeQty', id: p.id, delta: -1 })}>−</button>
-                    <span>{qty}</span>
-                    <button aria-label="Increase quantity" onClick={() => dispatch({ type: 'changeQty', id: p.id, delta: 1 })}>+</button>
-                  </span>
-                  <span className="line-price">{formatPrice(p.price * qty)}</span>
+          {cartProducts.map(({ key, product: p, variant, qty, price, max }) => {
+            const photo = cardImageFor(p)
+            return (
+              <div key={key} className="line-item">
+                <div className="line-media" style={{ background: mediaBackground(p) }}>
+                  {photo && <img src={sized(photo, 200)} alt="" onError={(e) => { e.currentTarget.style.opacity = '0' }} />}
                 </div>
+                <div className="line-info">
+                  <span className="line-name">{p.name}</span>
+                  <span className="line-spec">{[variant?.label, specLine(p)].filter(Boolean).join(' · ')}</span>
+                  <div className="line-row">
+                    <span className="stepper">
+                      <button aria-label="Decrease quantity" onClick={() => dispatch({ type: 'changeQty', key, delta: -1 })}>−</button>
+                      <span>{qty}</span>
+                      <button
+                        aria-label="Increase quantity"
+                        disabled={max !== undefined && qty >= max}
+                        onClick={() => dispatch({ type: 'changeQty', key, delta: 1 })}
+                      >
+                        +
+                      </button>
+                    </span>
+                    <span className="line-price">{formatPrice(price * qty)}</span>
+                  </div>
+                </div>
+                <button className="line-remove" onClick={() => dispatch({ type: 'removeItem', key })}>
+                  Remove
+                </button>
               </div>
-              <button className="line-remove" onClick={() => dispatch({ type: 'removeItem', id: p.id })}>
-                Remove
-              </button>
-            </div>
-          ))}
+            )
+          })}
         </div>
         {cartProducts.length > 0 && (
           <div className="drawer-foot">

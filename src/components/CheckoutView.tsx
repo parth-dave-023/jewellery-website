@@ -74,12 +74,13 @@ export default function CheckoutView() {
         </div>
         <aside className="summary-card sticky">
           <h2>Your order</h2>
-          {cartProducts.map(({ product: p, qty }) => (
-            <div key={p.id} className="foot-row mini">
+          {cartProducts.map(({ key, product: p, variant, qty, price }) => (
+            <div key={key} className="foot-row mini">
               <span>
-                {p.name} <span className="qty-x">× {qty}</span>
+                {p.name}
+                {variant && ` · ${variant.label}`} <span className="qty-x">× {qty}</span>
               </span>
-              <span>{formatPrice(p.price * qty)}</span>
+              <span>{formatPrice(price * qty)}</span>
             </div>
           ))}
           <div className="foot-row">

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { useStore } from '../store'
-import { PRODUCTS, formatPrice } from '../data/products'
+import { PRODUCTS, priceLabel, specLine } from '../data/products'
 import { SearchIcon, AccountIcon, HeartIcon, BagIcon, CloseIcon } from './Icons'
 
 const ANNOUNCEMENT = 'Complimentary insured shipping across India · Lifetime warranty & servicing'
@@ -29,13 +29,8 @@ function SearchOverlay() {
 
   const query = q.trim().toLowerCase()
   const hits = query
-    ? PRODUCTS.filter(
-        (p) =>
-          p.name.toLowerCase().includes(query) ||
-          p.type.toLowerCase().includes(query) ||
-          p.shape.toLowerCase().includes(query) ||
-          p.metal.toLowerCase().includes(query) ||
-          p.style.toLowerCase().includes(query),
+    ? PRODUCTS.filter((p) =>
+        [p.name, p.type, p.shape, p.metal, p.style].some((v) => v?.toLowerCase().includes(query)),
       ).slice(0, 7)
     : []
 
@@ -48,7 +43,7 @@ function SearchOverlay() {
             ref={inputRef}
             value={q}
             onChange={(e) => setQ(e.target.value)}
-            placeholder="Search rings, pear, rose gold, solitaire…"
+            placeholder="Search by name, type or stone shape…"
             aria-label="Search products"
           />
           <button className="icon-btn" aria-label="Close search" onClick={() => dispatch({ type: 'setSearch', open: false })}>
@@ -61,10 +56,8 @@ function SearchOverlay() {
               <li key={p.id}>
                 <button onClick={() => dispatch({ type: 'openQuick', id: p.id })}>
                   <span className="search-name">{p.name}</span>
-                  <span className="search-spec">
-                    {p.metal} · {p.carat} ct
-                  </span>
-                  <span className="search-price">{formatPrice(p.price)}</span>
+                  <span className="search-spec">{specLine(p)}</span>
+                  <span className="search-price">{priceLabel(p)}</span>
                 </button>
               </li>
             ))}
