@@ -3,6 +3,7 @@ import {
   EMPTY_FILTERS,
   TAX_RATE,
   PRODUCTS,
+  TYPES,
   canBuy,
   passes,
   sortProducts,
@@ -47,6 +48,21 @@ interface State {
   orderNo: string | null
 }
 
+/**
+ * Shopify gives every product and collection its own URL (the admin's "View"
+ * link, shared links, search engines). The storefront is a single page, so when
+ * it is opened on one of those URLs it starts on that piece or that category.
+ */
+const startFromUrl = (): Partial<State> => {
+  if (typeof window === 'undefined') return {}
+  const path = window.location.pathname
+  const product = path.match(/\/products\/([^/?#]+)/)?.[1]
+  if (product && PRODUCTS.some((p) => p.id === product)) return { quickViewId: product }
+  const collection = path.match(/\/collections\/([^/?#]+)/)?.[1]?.toLowerCase()
+  const type = TYPES.find((t) => t.toLowerCase() === collection)
+  return type ? { filters: { ...EMPTY_FILTERS, types: [type] } } : {}
+}
+
 const initialState: State = {
   view: 'shop',
   browseMode: 'rail',
@@ -59,7 +75,11 @@ const initialState: State = {
   searchOpen: false,
   quickViewId: null,
   orderNo: null,
+  ...startFromUrl(),
 }
+
+/** True when the page was opened on a category URL, i.e. it starts pre-filtered. */
+export const startsFiltered = initialState.filters !== EMPTY_FILTERS
 
 type FacetKind = 'types' | 'shapes' | 'metals' | 'carats' | 'styles'
 

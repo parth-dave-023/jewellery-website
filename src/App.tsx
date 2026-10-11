@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { StoreProvider, useStore } from './store'
+import { StoreProvider, startsFiltered, useStore } from './store'
 import Header from './components/Header'
 import Hero from './components/Hero'
 import ShapeStrip from './components/ShapeStrip'
@@ -45,6 +45,11 @@ function Shell() {
   useEffect(() => {
     window.scrollTo({ top: 0 })
   }, [state.view])
+
+  // Opened on a category URL: land directly on the (already filtered) pieces.
+  useEffect(() => {
+    if (startsFiltered) document.getElementById('shop')?.scrollIntoView({ block: 'start', behavior: 'instant' })
+  }, [])
 
   useEffect(() => {
     const anyOverlay = state.drawerOpen || state.wishlistOpen || state.quickViewId !== null || state.searchOpen
